@@ -1,0 +1,94 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import useSWR from "swr";
+import { api } from "@/lib/api";
+import type { Order, OrderStatus } from "@/lib/types";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import { OrderStatusBadge } from "@/components/orders/status-badge";
+
+const statusOptions: { value: OrderStatus | "all"; label: string }[] = [
+  { value: "all", label: "All statuses" },
+  { value: "pending", label: "Pending" },
+  { value: "confirmed", label: "Confirmed" },
+  { value: "shipped", label: "Shipped" },
+  { value: "delivered", label: "Delivered" },
+  { value: "cancelled", label: "Cancelled" },
+];
+
+export default function OrdersPage() {
+  const [status, setStatus] = useState<OrderStatus | "all">("all");
+  const qs = status === "all" ? "" : `?status=${status}`;
+  const { data: orders, isLoading } = useSWR<Order[]>(`/api/v1/seller/orders${qs}`, (path: string) =>
+    api.get<Order[]>(path),
+  );
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold">Orders</h1>
+          <p className="text-sm text-muted-foreground">Track and fulfill customer orders.</p>
+        </div>
+        <Select value={status} onValueChange={(v) => setStatus(v as OrderStatus | "all")}>
+          <SelectTrigger className="w-40">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {statusOptions.map((o) => (
+              <SelectItem key={o.value} value={o.value}>
+                {o.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      {isLoading ? (
+        <div className="space-y-2">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Skeleton key={i} className="h-14 w-full" />
+          ))}
+        </div>
+      ) : !orders || orders.length === 0 ? (
+        <p className="text-sm text-muted-foreground">No orders yet.</p>
+      ) : (
+        <div className="overflow-x-auto rounded-md border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Order</TableHead>
+                <TableHead>Items</TableHead>
+                <TableHead>Total</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Placed</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {orders.map((o) => (
+                <TableRow key={o.id} className="cursor-pointer hover:bg-muted/50">
+                  <TableCell className="font-mono text-xs">
+                    <Link href={`/orders/${o.id}`} className="hover:underline">
+                      #{o.id.slice(0, 8)}
+                    </Link>
+                  </TableCell>
+                  <TableCell>{o.items.length}</TableCell>
+                  <TableCell>₹{o.total.toFixed(2)}</TableCell>
+                  <TableCell>
+                    <OrderStatusBadge status={o.status} />
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {new Date(o.created_at).toLocaleDateString()}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )}
+    </div>
+  );
+}
