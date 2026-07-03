@@ -88,12 +88,19 @@ export default function ProductsPage() {
                       <div className="h-10 w-10 rounded bg-muted" />
                     )}
                   </TableCell>
-                  <TableCell className="font-medium">{p.name}</TableCell>
-                  <TableCell>₹{p.price.toFixed(2)}</TableCell>
-                  <TableCell>{p.stock_qty}</TableCell>
+                  <TableCell className="font-medium">
+                    {p.name}
+                    {p.variants.length > 1 && (
+                      <span className="ml-2 text-xs text-muted-foreground">{p.variants.length} variants</span>
+                    )}
+                  </TableCell>
                   <TableCell>
-                    <Badge variant={p.is_active ? "default" : "secondary"}>
-                      {p.is_active ? "Active" : "Inactive"}
+                    {p.price_min === p.price_max ? `₹${p.price_min.toFixed(2)}` : `₹${p.price_min.toFixed(2)} – ₹${p.price_max.toFixed(2)}`}
+                  </TableCell>
+                  <TableCell>{p.total_inventory}</TableCell>
+                  <TableCell>
+                    <Badge variant={p.status === "active" ? "default" : "secondary"} className="capitalize">
+                      {p.status}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">

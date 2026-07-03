@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
 import type { Product } from "@/lib/types";
-import { ProductForm, type ProductFormValues } from "@/components/products/product-form";
+import { ProductForm, buildProductPayload, type ProductFormValues } from "@/components/products/product-form";
 
 export default function NewProductPage() {
   const router = useRouter();
 
   async function handleSubmit(values: ProductFormValues) {
-    await api.post<Product>("/api/v1/seller/products", values);
+    await api.post<Product>("/api/v1/seller/products", buildProductPayload(values));
     toast.success("Product created");
     router.push("/products");
   }

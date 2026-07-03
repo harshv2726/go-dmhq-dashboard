@@ -6,7 +6,7 @@ import useSWR from "swr";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
 import type { Product } from "@/lib/types";
-import { ProductForm, type ProductFormValues } from "@/components/products/product-form";
+import { ProductForm, buildProductPayload, type ProductFormValues } from "@/components/products/product-form";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
@@ -28,7 +28,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
   }, [notFound, router]);
 
   async function handleSubmit(values: ProductFormValues) {
-    await api.put<Product>(`/api/v1/seller/products/${id}`, values);
+    await api.put<Product>(`/api/v1/seller/products/${id}`, buildProductPayload(values));
     toast.success("Product updated");
     router.push("/products");
   }

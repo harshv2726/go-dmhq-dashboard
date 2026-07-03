@@ -54,10 +54,49 @@ export interface Store {
 }
 
 export interface ProductImage {
+  id: string;
   url: string;
   alt: string;
 }
 
+export type ProductStatus = "active" | "draft" | "archived";
+export type InventoryPolicy = "deny" | "continue";
+
+export interface ProductOption {
+  id: string;
+  product_id: string;
+  name: string;
+  position: number;
+  values: string[];
+}
+
+export interface ProductVariant {
+  id: string;
+  product_id: string;
+  store_id: string;
+  title: string;
+  option1: string | null;
+  option2: string | null;
+  option3: string | null;
+  price: number;
+  compare_at_price: number | null;
+  sku: string | null;
+  barcode: string | null;
+  position: number;
+  inventory_quantity: number;
+  inventory_policy: InventoryPolicy;
+  requires_shipping: boolean;
+  taxable: boolean;
+  weight: number;
+  weight_unit: string;
+  image_id: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+// Price/SKU/inventory live entirely on variants, not the product — a
+// "simple" product still gets exactly one ("Default Title") variant under
+// the hood. price_min/price_max/total_inventory are computed server-side.
 export interface Product {
   id: string;
   store_id: string;
@@ -65,14 +104,18 @@ export interface Product {
   name: string;
   slug: string;
   description: string | null;
-  price: number;
-  compare_price: number | null;
-  sku: string | null;
-  stock_qty: number;
-  is_active: boolean;
+  vendor: string | null;
+  product_type: string | null;
+  tags: string | null;
+  status: ProductStatus;
   images: ProductImage[];
   seo_title: string | null;
   seo_description: string | null;
+  options: ProductOption[];
+  variants: ProductVariant[];
+  price_min: number;
+  price_max: number;
+  total_inventory: number;
   created_at: string;
   updated_at: string;
 }
