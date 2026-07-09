@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Google_Sans_Flex, Geist_Mono } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
 import { Toaster } from "@/components/ui/sonner";
 
-// Matches the --font-sans variable the theme (globals.css) expects.
-const googleSansFlex = Google_Sans_Flex({
-  variable: "--font-sans",
-  subsets: ["latin"],
-  weight: "variable",
-});
-
+// --font-sans is a plain system-ui stack set directly in globals.css
+// (matches dashboard-concept-ui-theme's main.css exactly), no web font needed.
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -29,7 +24,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${googleSansFlex.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>{children}</AuthProvider>
