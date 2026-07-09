@@ -13,12 +13,9 @@ import { PageHeader } from "@/components/layout/page-header";
 export default function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
-  // No GET /seller/products/{id} on the backend — list + find is fine at
-  // this scale (early-stage sellers, not thousands of SKUs).
-  const { data: products, isLoading } = useSWR<Product[]>("/api/v1/seller/products", (path: string) =>
-    api.get<Product[]>(path),
+  const { data: product, isLoading } = useSWR<Product>(`/api/v1/seller/products/${id}`, (path: string) =>
+    api.get<Product>(path),
   );
-  const product = products?.find((p) => p.id === id) ?? null;
   const notFound = !isLoading && !product;
 
   useEffect(() => {

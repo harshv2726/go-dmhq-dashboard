@@ -6,7 +6,7 @@ import useSWR from "swr";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
 import { api, ApiError } from "@/lib/api";
-import type { Product } from "@/lib/types";
+import type { Paginated, Product } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,13 +20,19 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { DataTable } from "@/components/products/data-table";
 import { columns } from "@/components/products/columns";
 import { PageHeader } from "@/components/layout/page-header";
+import { PaginationControls } from "@/components/layout/pagination-controls";
+
+const PAGE_SIZE = 50;
 
 export default function ProductsPage() {
+  const [page, setPage] = useState(1);
   const {
-    data: products,
+    data: response,
     isLoading,
     mutate,
-  } = useSWR<Product[]>("/api/v1/seller/products", (path: string) => api.get<Product[]>(path));
+  } = useSWR<Paginated<Product>>(`/api/v1/seller/products?page=${page}&limit=${PAGE_SIZE}`, (path: string) =>
+    api.get<Paginated<Product>>(path),
+  );
   const [toDelete, setToDelete] = useState<Product | null>(null);
 
   async function confirmDelete() {
@@ -34,7 +40,15 @@ export default function ProductsPage() {
     try {
       await api.del(`/api/v1/seller/products/${toDelete.id}`);
       toast.success("Product deleted");
-      mutate((current) => current?.filter((x) => x.id !== toDelete.id), { revalidate: false });
+      mutate(
+        (current) =>
+          current && {
+            ...current,
+            items: current.items.filter((x) => x.id !== toDelete.id),
+            total: current.total - 1,
+          },
+        { revalidate: false },
+      );
     } catch (err) {
       toast.error(err instanceof ApiError ? err.message : "Failed to delete product");
     } finally {
@@ -57,16 +71,24 @@ export default function ProductsPage() {
         }
       />
 
-      {isLoading ? (
+      {isLoading || !response ? (
         <div className="space-y-2">
           {Array.from({ length: 4 }).map((_, i) => (
             <Skeleton key={i} className="h-14 w-full" />
           ))}
         </div>
-      ) : !products || products.length === 0 ? (
+      ) : response.items.length === 0 ? (
         <p className="text-sm text-muted-foreground">No products yet. Create your first one.</p>
       ) : (
-        <DataTable columns={columns} data={products} meta={{ onDelete: setToDelete }} />
+        <>
+          <DataTable columns={columns} data={response.items} meta={{ onDelete: setToDelete }} />
+          <PaginationControls
+            page={response.page}
+            totalPages={response.total_pages}
+            total={response.total}
+            onPageChange={setPage}
+          />
+        </>
       )}
 
       <Dialog open={!!toDelete} onOpenChange={(open) => !open && setToDelete(null)}>

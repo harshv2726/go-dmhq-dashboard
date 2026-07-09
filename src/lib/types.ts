@@ -8,6 +8,16 @@ export interface ApiResponse<T> {
   error?: string;
 }
 
+// Standard envelope for every paginated list endpoint
+// (backend/pkg/pagination.Result).
+export interface Paginated<T> {
+  items: T[];
+  page: number;
+  limit: number;
+  total: number;
+  total_pages: number;
+}
+
 export type StaffRole = "owner" | "manager" | "staff";
 
 export interface AuthResponse {
