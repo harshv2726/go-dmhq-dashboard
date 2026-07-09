@@ -168,6 +168,17 @@ export interface DashboardStats {
   total_revenue: number;
 }
 
+export interface Customer {
+  id: string;
+  store_id: string;
+  name: string;
+  email: string;
+  phone: string;
+  created_at: string;
+  order_count: number;
+  total_spent: number;
+}
+
 export interface UploadResult {
   url: string;
 }

@@ -88,10 +88,12 @@ export default function ProductsPage() {
                       <div className="h-10 w-10 rounded bg-muted" />
                     )}
                   </TableCell>
-                  <TableCell className="font-medium">
-                    {p.name}
+                  <TableCell className="max-w-xs font-medium">
+                    <span className="block truncate" title={p.name}>
+                      {p.name}
+                    </span>
                     {p.variants.length > 1 && (
-                      <span className="ml-2 text-xs text-muted-foreground">{p.variants.length} variants</span>
+                      <span className="text-xs text-muted-foreground">{p.variants.length} variants</span>
                     )}
                   </TableCell>
                   <TableCell>
