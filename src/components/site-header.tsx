@@ -1,29 +1,80 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { mainNavItems, settingsNavItem } from "@/components/layout/nav-items";
-
-const allNavItems = [...mainNavItems, settingsNavItem];
-
-function currentTitle(pathname: string) {
-  const match = allNavItems.find(
-    (item) => pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href + "/")),
-  );
-  return match?.label ?? "DMHQ";
-}
+import { useState } from "react";
+import { LogOut, Menu } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { SidebarNav } from "@/components/layout/sidebar-nav";
+import { useAuth } from "@/lib/auth-context";
+import { useStore } from "@/lib/use-store";
 
 export function SiteHeader() {
-  const pathname = usePathname();
+  const { user, logout } = useAuth();
+  const { store } = useStore();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
-      <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
-        <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
-        <h1 className="text-base font-medium">{currentTitle(pathname)}</h1>
+    <header className="flex items-center justify-between border-b border-[#f1f1f1] p-4">
+      <div className="flex items-center gap-4">
+        <button className="md:hidden" onClick={() => setMobileOpen(true)} aria-label="Open menu">
+          <Menu className="size-5" />
+        </button>
+        <span className="text-base font-medium">DM Headquarters.</span>
       </div>
+
+      <nav>
+        <ul className="flex list-none items-center gap-4">
+          <li>
+            <button
+              disabled
+              title="Notifications — coming soon"
+              className="text-sm text-muted-foreground opacity-60 disabled:cursor-not-allowed"
+            >
+              Notification
+            </button>
+          </li>
+          <li>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="rounded-full border border-[#c9c9c9] px-3 py-1.5 text-sm hover:bg-accent">
+                  {store?.name ?? "Store"}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>
+                  {store?.name ?? "Account"}
+                  {user && (
+                    <span className="block text-xs font-normal capitalize text-muted-foreground">{user.staffRole}</span>
+                  )}
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={logout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </li>
+        </ul>
+      </nav>
+
+      <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+        <SheetContent side="left" className="flex w-72 flex-col p-4">
+          <SheetHeader className="p-0">
+            <SheetTitle className="text-base font-medium">DM Headquarters.</SheetTitle>
+          </SheetHeader>
+          <div className="mt-4 flex-1 overflow-y-auto">
+            <SidebarNav onNavigate={() => setMobileOpen(false)} />
+          </div>
+        </SheetContent>
+      </Sheet>
     </header>
   );
 }

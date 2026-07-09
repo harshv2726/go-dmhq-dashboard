@@ -1,52 +1,9 @@
-"use client";
+import { SidebarNav } from "@/components/layout/sidebar-nav";
 
-import Link from "next/link";
-import { CirclePlusIcon, StoreIcon } from "lucide-react";
-import { NavMain } from "@/components/nav-main";
-import { NavSecondary } from "@/components/nav-secondary";
-import { NavUser } from "@/components/nav-user";
-import { mainNavItems, settingsNavItem } from "@/components/layout/nav-items";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { useStore } from "@/lib/use-store";
-
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { store } = useStore();
-
+export function AppSidebar() {
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:p-1.5!">
-              <Link href="/">
-                <StoreIcon className="size-5!" />
-                <span className="text-base font-semibold">{store?.name ?? "DMHQ"}</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
-      <SidebarContent>
-        <NavMain
-          items={mainNavItems.map((item) => ({ title: item.label, url: item.href, icon: <item.icon /> }))}
-          quickCreate={{ label: "New product", url: "/products/new", icon: <CirclePlusIcon /> }}
-        />
-        <NavSecondary
-          items={[{ title: settingsNavItem.label, url: settingsNavItem.href, icon: <settingsNavItem.icon /> }]}
-          className="mt-auto"
-        />
-      </SidebarContent>
-      <SidebarFooter>
-        <NavUser />
-      </SidebarFooter>
-    </Sidebar>
+    <aside className="m-3 hidden h-[85vh] min-w-[200px] flex-col overflow-y-auto rounded-[9px] border border-[#f1f1f1] px-2 py-4 md:flex">
+      <SidebarNav />
+    </aside>
   );
 }
