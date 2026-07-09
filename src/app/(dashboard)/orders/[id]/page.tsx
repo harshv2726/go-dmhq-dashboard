@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { OrderStatusBadge } from "@/components/orders/status-badge";
+import { PageHeader } from "@/components/layout/page-header";
 
 const statuses: OrderStatus[] = ["pending", "confirmed", "shipped", "delivered", "cancelled"];
 
@@ -42,13 +43,11 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold">Order #{order.id.slice(0, 8)}</h1>
-          <p className="text-sm text-muted-foreground">Placed {new Date(order.created_at).toLocaleString()}</p>
-        </div>
-        <OrderStatusBadge status={order.status} />
-      </div>
+      <PageHeader
+        title={`Order #${order.id.slice(0, 8)}`}
+        description={`Placed ${new Date(order.created_at).toLocaleString()}`}
+        action={<OrderStatusBadge status={order.status} />}
+      />
 
       <Card>
         <CardHeader>

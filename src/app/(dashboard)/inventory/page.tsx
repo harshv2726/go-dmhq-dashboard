@@ -8,6 +8,7 @@ import type { Product, ProductVariant } from "@/lib/types";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PageHeader } from "@/components/layout/page-header";
 
 interface Row {
   productId: string;
@@ -51,10 +52,7 @@ export default function InventoryPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Inventory</h1>
-        <p className="text-sm text-muted-foreground">Manage stock across every product variant.</p>
-      </div>
+      <PageHeader title="Inventory" description="Manage stock across every product variant." />
 
       {isLoading ? (
         <div className="space-y-2">

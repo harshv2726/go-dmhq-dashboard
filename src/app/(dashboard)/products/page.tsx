@@ -19,6 +19,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTable } from "@/components/products/data-table";
 import { columns } from "@/components/products/columns";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default function ProductsPage() {
   const {
@@ -43,18 +44,18 @@ export default function ProductsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold">Products</h1>
-          <p className="text-sm text-muted-foreground">Manage what you sell.</p>
-        </div>
-        <Button asChild>
-          <Link href="/products/new">
-            <Plus className="h-4 w-4" />
-            New product
-          </Link>
-        </Button>
-      </div>
+      <PageHeader
+        title="Products"
+        description="Manage what you sell."
+        action={
+          <Button asChild>
+            <Link href="/products/new">
+              <Plus className="h-4 w-4" />
+              New product
+            </Link>
+          </Button>
+        }
+      />
 
       {isLoading ? (
         <div className="space-y-2">

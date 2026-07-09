@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { api } from "@/lib/api";
 import type { Collection } from "@/lib/types";
 import { CollectionForm, type CollectionFormValues } from "@/components/collections/collection-form";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default function NewCollectionPage() {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function NewCollectionPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">New collection</h1>
+      <PageHeader title="New collection" />
       <CollectionForm onSubmit={handleSubmit} submitLabel="Create collection" />
     </div>
   );

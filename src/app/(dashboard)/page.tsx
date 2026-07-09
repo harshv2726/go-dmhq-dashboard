@@ -6,6 +6,7 @@ import { useStore } from "@/lib/use-store";
 import type { DashboardStats } from "@/lib/types";
 import { SectionCards } from "@/components/section-cards";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default function DashboardHomePage() {
   const { store } = useStore();
@@ -27,10 +28,7 @@ export default function DashboardHomePage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Dashboard</h1>
-        <p className="text-sm text-muted-foreground">A quick look at how your store is doing.</p>
-      </div>
+      <PageHeader title="Dashboard" description="A quick look at how your store is doing." />
       <SectionCards items={items} />
     </div>
   );

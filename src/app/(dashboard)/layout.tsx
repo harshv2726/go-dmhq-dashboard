@@ -28,7 +28,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="flex flex-1">
         <AppSidebar />
         <main className="@container/main flex-1 overflow-x-hidden overflow-y-auto">
-          <div className="mx-4 md:mx-25 md:my-2.25">{children}</div>
+          <div className="px-4 py-4 md:px-8">{children}</div>
         </main>
       </div>
     </div>

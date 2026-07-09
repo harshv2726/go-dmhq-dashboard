@@ -6,6 +6,7 @@ import { useStore } from "@/lib/use-store";
 import type { Customer } from "@/lib/types";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default function CustomersPage() {
   const { store } = useStore();
@@ -20,10 +21,7 @@ export default function CustomersPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Customers</h1>
-        <p className="text-sm text-muted-foreground">Everyone who has ordered from your store.</p>
-      </div>
+      <PageHeader title="Customers" description="Everyone who has ordered from your store." />
 
       {isLoading ? (
         <div className="space-y-2">

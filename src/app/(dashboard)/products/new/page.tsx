@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { api } from "@/lib/api";
 import type { Product } from "@/lib/types";
 import { ProductForm, buildProductPayload, type ProductFormValues } from "@/components/products/product-form";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default function NewProductPage() {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function NewProductPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">New product</h1>
+      <PageHeader title="New product" />
       <ProductForm onSubmit={handleSubmit} submitLabel="Create product" />
     </div>
   );

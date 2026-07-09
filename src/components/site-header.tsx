@@ -21,12 +21,12 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="flex items-center justify-between border-b border-[#f1f1f1] p-4">
+    <header className="flex items-center justify-between border-b border-[#f1f1f1] px-6 py-4">
       <div className="flex items-center gap-4">
         <button className="md:hidden" onClick={() => setMobileOpen(true)} aria-label="Open menu">
           <Menu className="size-5" />
         </button>
-        <span className="text-base font-medium">DM Headquarters.</span>
+        <span className="font-mono text-[22px] font-semibold">DMHQ.</span>
       </div>
 
       <nav>
@@ -68,7 +68,7 @@ export function SiteHeader() {
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetContent side="left" className="flex w-72 flex-col p-4">
           <SheetHeader className="p-0">
-            <SheetTitle className="text-base font-medium">DM Headquarters.</SheetTitle>
+            <SheetTitle className="font-mono text-[22px] font-semibold">DMHQ.</SheetTitle>
           </SheetHeader>
           <div className="mt-4 flex-1 overflow-y-auto">
             <SidebarNav onNavigate={() => setMobileOpen(false)} />

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronRight, CirclePlus, type LucideIcon } from "lucide-react";
+import { ChevronRight, CircleHelp, CirclePlus, type LucideIcon } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { mainNavItems, settingsNavItem } from "@/components/layout/nav-items";
 import { cn } from "@/lib/utils";
@@ -31,7 +31,7 @@ function NavLink({
       href={href}
       onClick={onNavigate}
       className={cn(
-        "flex items-center gap-[3px] rounded-[6px] p-1.5 text-sm transition-colors",
+        "flex items-center gap-0.75 rounded-[6px] p-1.5 text-sm transition-colors",
         active ? "bg-[#eaeaea] font-medium" : "hover:bg-[#eaeaea]",
         className,
       )}
@@ -54,7 +54,7 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
           <Link
             href="/products/new"
             onClick={onNavigate}
-            className="flex items-center gap-[3px] rounded-[6px] bg-foreground p-1.5 text-sm text-background"
+            className="flex items-center gap-0.75 rounded-[6px] bg-foreground p-1.5 text-sm text-background"
           >
             <CirclePlus className="size-3.5" />
             New product
@@ -95,7 +95,7 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
           );
         })}
       </ul>
-      <ul className="list-none">
+      <ul className="list-none space-y-0.5">
         <li>
           <NavLink
             href={settingsNavItem.href}
@@ -104,6 +104,16 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
             active={isActiveHref(pathname, settingsNavItem.href)}
             onNavigate={onNavigate}
           />
+        </li>
+        <li>
+          <button
+            disabled
+            title="Help — coming soon"
+            className="flex w-full cursor-not-allowed items-center gap-0.75 rounded-[6px] p-1.5 text-left text-sm opacity-60"
+          >
+            <CircleHelp className="size-3.5" />
+            Help
+          </button>
         </li>
       </ul>
     </div>

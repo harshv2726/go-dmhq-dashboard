@@ -19,6 +19,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default function CollectionsPage() {
   const { collections, isLoading, refresh } = useCollections();
@@ -39,18 +40,18 @@ export default function CollectionsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold">Collections</h1>
-          <p className="text-sm text-muted-foreground">Group products together.</p>
-        </div>
-        <Button asChild>
-          <Link href="/collections/new">
-            <Plus className="h-4 w-4" />
-            New collection
-          </Link>
-        </Button>
-      </div>
+      <PageHeader
+        title="Collections"
+        description="Group products together."
+        action={
+          <Button asChild>
+            <Link href="/collections/new">
+              <Plus className="h-4 w-4" />
+              New collection
+            </Link>
+          </Button>
+        }
+      />
 
       {isLoading ? (
         <div className="space-y-2">

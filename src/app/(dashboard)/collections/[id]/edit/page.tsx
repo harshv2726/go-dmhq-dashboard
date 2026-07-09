@@ -8,6 +8,7 @@ import { api } from "@/lib/api";
 import type { Collection } from "@/lib/types";
 import { CollectionForm, type CollectionFormValues } from "@/components/collections/collection-form";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default function EditCollectionPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -36,7 +37,7 @@ export default function EditCollectionPage({ params }: { params: Promise<{ id: s
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">Edit collection</h1>
+      <PageHeader title="Edit collection" />
       <CollectionForm initial={collection} onSubmit={handleSubmit} submitLabel="Save changes" />
     </div>
   );

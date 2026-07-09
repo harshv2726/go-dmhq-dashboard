@@ -8,6 +8,7 @@ import { api } from "@/lib/api";
 import type { Product } from "@/lib/types";
 import { ProductForm, buildProductPayload, type ProductFormValues } from "@/components/products/product-form";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PageHeader } from "@/components/layout/page-header";
 
 export default function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -38,7 +39,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">Edit product</h1>
+      <PageHeader title="Edit product" />
       <ProductForm initial={product} onSubmit={handleSubmit} submitLabel="Save changes" />
     </div>
   );
