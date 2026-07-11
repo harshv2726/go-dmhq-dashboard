@@ -58,7 +58,16 @@ export interface Store {
   terms_of_service: string | null;
   shipping_policy: string | null;
   tax_rate_percent: number;
+  tax_inclusive: boolean;
   default_shipping_fee: number;
+  shipping_fee_mode: "flat" | "free" | "free_above";
+  free_shipping_above_amount: number;
+  ship_all_india: boolean;
+  restricted_states: string[];
+  delivery_estimate_text: string | null;
+  whatsapp_notifications_enabled: boolean;
+  meta_pixel_id: string | null;
+  ga4_measurement_id: string | null;
   created_at: string;
   updated_at: string;
 }

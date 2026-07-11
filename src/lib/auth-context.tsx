@@ -25,6 +25,7 @@ interface AuthContextValue {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (input: RegisterInput) => Promise<void>;
+  completeOAuthLogin: (accessToken: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -82,13 +83,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(toUser(res));
   }
 
+  // Google OAuth's callback redirect only carries access_token/store_id in
+  // the URL (see auth.GoogleHandler.Callback) — it can't include
+  // store_slug/staff_role too without leaking them into browser history, so
+  // this trades the access token for the full profile via the same
+  // httpOnly refresh cookie the callback's redirect response already set.
+  async function completeOAuthLogin(accessToken: string): Promise<boolean> {
+    setAccessToken(accessToken);
+    const res = await refreshSession();
+    if (!res) {
+      setAccessToken(null);
+      return false;
+    }
+    setUser(toUser(res));
+    return true;
+  }
+
   function logout() {
     setAccessToken(null);
     setUser(null);
     router.replace("/login");
   }
 
-  return <AuthContext.Provider value={{ user, isLoading, login, register, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, isLoading, login, register, completeOAuthLogin, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {

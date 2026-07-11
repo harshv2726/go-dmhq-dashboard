@@ -1,9 +1,69 @@
-import { SidebarNav } from "@/components/layout/sidebar-nav";
+"use client";
 
-export function AppSidebar() {
+import { useState } from "react";
+import Link from "next/link";
+import { CircleHelp } from "lucide-react";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
+import { SettingsDialog } from "@/components/settings-dialog";
+import { settingsNavItem } from "@/components/layout/nav-items";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarRail,
+} from "@/components/ui/sidebar";
+
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
   return (
-    <aside className="m-1.5 hidden h-[85vh] min-w-50 flex-col overflow-y-auto rounded-[9px] border border-[#f1f1f1] p-2 md:flex">
-      <SidebarNav />
-    </aside>
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" asChild>
+              <Link href="/">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  <span className="text-sm font-bold">D</span>
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold">DMHQ</span>
+                </div>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent>
+        <NavMain />
+        <SidebarGroup className="mt-auto">
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton tooltip={settingsNavItem.label} onClick={() => setSettingsOpen(true)}>
+                <settingsNavItem.icon />
+                <span>{settingsNavItem.label}</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton disabled tooltip="Help — coming soon">
+                <CircleHelp />
+                <span>Help</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter>
+        <NavUser />
+      </SidebarFooter>
+      <SidebarRail />
+      <SettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
+    </Sidebar>
   );
 }

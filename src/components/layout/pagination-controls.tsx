@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination";
 
 export function PaginationControls({
   page,
@@ -11,6 +12,9 @@ export function PaginationControls({
   total: number;
   onPageChange: (page: number) => void;
 }) {
+  const canPrev = page > 1;
+  const canNext = page < totalPages;
+
   return (
     <div className="flex items-center justify-between">
       <p className="text-sm text-muted-foreground">{total} total</p>
@@ -18,12 +22,38 @@ export function PaginationControls({
         <p className="text-sm text-muted-foreground">
           Page {page} of {totalPages}
         </p>
-        <Button variant="outline" size="sm" onClick={() => onPageChange(page - 1)} disabled={page <= 1}>
-          Previous
-        </Button>
-        <Button variant="outline" size="sm" onClick={() => onPageChange(page + 1)} disabled={page >= totalPages}>
-          Next
-        </Button>
+        <Pagination className="mx-0 w-auto">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationLink
+                href="#"
+                aria-label="Go to previous page"
+                aria-disabled={!canPrev}
+                className={!canPrev ? "pointer-events-none opacity-50" : undefined}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (canPrev) onPageChange(page - 1);
+                }}
+              >
+                <ChevronLeft />
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink
+                href="#"
+                aria-label="Go to next page"
+                aria-disabled={!canNext}
+                className={!canNext ? "pointer-events-none opacity-50" : undefined}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (canNext) onPageChange(page + 1);
+                }}
+              >
+                <ChevronRight />
+              </PaginationLink>
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );
