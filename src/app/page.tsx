@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  ArrowRight,
   Boxes,
+  Check,
   CreditCard,
   Link2,
   MessageCircle,
@@ -80,6 +82,8 @@ const storeTypes = [
 ];
 
 export default function LandingPage() {
+  const [Step1Icon, Step2Icon, Step3Icon] = steps.map((s) => s.icon);
+
   return (
     <div className="flex min-h-svh flex-col">
       <header className="border-b border-border">
@@ -132,13 +136,85 @@ export default function LandingPage() {
         </section>
 
         {/* How it works */}
-        <section className="border-t border-border bg-muted/40">
+        <section id="how-it-works" className="border-t border-border bg-muted/40">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">How it works</h2>
               <p className="mt-2 text-muted-foreground">From DM to delivered, in three steps.</p>
             </div>
-            <div className="mt-12 grid gap-8 sm:grid-cols-3">
+
+            {/* Illustration: a checkout link opened on a phone, with the three
+                steps fanned around it as floating cards. Decorative — the
+                numbered list below carries the actual content for anyone on
+                a small screen or a screen reader. */}
+            <div className="relative mx-auto mt-16 hidden h-[380px] max-w-3xl lg:block">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_50%_60%_at_50%_40%,color-mix(in_oklch,var(--primary),transparent_92%),transparent)]"
+              />
+
+              {/* Phone */}
+              <div className="absolute left-1/2 top-0 w-[220px] -translate-x-1/2 rounded-[2.25rem] border-[6px] border-foreground bg-foreground shadow-xl">
+                <div className="absolute left-1/2 top-0 h-5 w-24 -translate-x-1/2 rounded-b-2xl bg-foreground" />
+                <div className="h-[360px] overflow-hidden rounded-[1.75rem] bg-card px-4 pb-4 pt-9">
+                  <p className="truncate text-[11px] text-muted-foreground">dmhq.app/priya</p>
+                  <div className="mt-4 flex items-center gap-3 rounded-xl border border-border p-2.5">
+                    <div className="size-12 shrink-0 rounded-lg bg-accent" />
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-semibold">Handmade clay mug</p>
+                      <p className="text-xs text-muted-foreground">₹499</p>
+                    </div>
+                  </div>
+                  <div className="mt-3 rounded-lg bg-primary py-2.5 text-center text-xs font-medium text-primary-foreground">
+                    Pay ₹499
+                  </div>
+                  <div className="mt-5 flex items-center gap-2 rounded-lg bg-accent px-2.5 py-2.5">
+                    <div className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                      <Check className="size-3" />
+                    </div>
+                    <p className="text-[11px] leading-tight text-accent-foreground">
+                      Order confirmed — notified on WhatsApp
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Fanned step cards */}
+              <div className="absolute left-0 top-16 w-56 -rotate-6 rounded-xl border border-border bg-card p-4 shadow-lg">
+                <div className="flex items-center gap-2">
+                  <div className="flex size-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    <Step1Icon className="size-3.5" />
+                  </div>
+                  <span className="font-heading text-xs font-semibold text-muted-foreground">Step 1</span>
+                </div>
+                <p className="mt-2 text-sm font-semibold">{steps[0].title}</p>
+                <p className="mt-1 text-xs text-muted-foreground">Get a checkout link — no website to build.</p>
+              </div>
+
+              <div className="absolute right-0 top-6 w-56 rotate-6 rounded-xl border border-border bg-card p-4 shadow-lg">
+                <div className="flex items-center gap-2">
+                  <div className="flex size-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    <Step2Icon className="size-3.5" />
+                  </div>
+                  <span className="font-heading text-xs font-semibold text-muted-foreground">Step 2</span>
+                </div>
+                <p className="mt-2 text-sm font-semibold">{steps[1].title}</p>
+                <p className="mt-1 text-xs text-muted-foreground">Drop it in your bio, a DM, or a status.</p>
+              </div>
+
+              <div className="absolute bottom-0 right-6 w-56 -rotate-3 rounded-xl border border-border bg-card p-4 shadow-lg">
+                <div className="flex items-center gap-2">
+                  <div className="flex size-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    <Step3Icon className="size-3.5" />
+                  </div>
+                  <span className="font-heading text-xs font-semibold text-muted-foreground">Step 3</span>
+                </div>
+                <p className="mt-2 text-sm font-semibold">{steps[2].title}</p>
+                <p className="mt-1 text-xs text-muted-foreground">Order lands in your dashboard. You ship it.</p>
+              </div>
+            </div>
+
+            <div className="mt-12 grid gap-8 sm:grid-cols-3 lg:mt-16">
               {steps.map((step) => (
                 <div key={step.number} className="flex flex-col items-start gap-3">
                   <div className="flex items-center gap-3">
@@ -158,7 +234,7 @@ export default function LandingPage() {
         </section>
 
         {/* Features */}
-        <section className="border-t border-border">
+        <section id="features" className="border-t border-border">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -206,7 +282,7 @@ export default function LandingPage() {
         </section>
 
         {/* Pricing */}
-        <section className="border-t border-border">
+        <section id="pricing" className="border-t border-border">
           <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
             <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Simple, honest pricing</h2>
             <p className="mt-2 text-muted-foreground">
@@ -235,20 +311,63 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-8 text-sm text-muted-foreground sm:flex-row sm:justify-between sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2">
-            <span className="font-heading font-semibold tracking-tight text-foreground">DMHQ</span>
-            <span>— Tap, buy, done.</span>
+      <footer className="relative overflow-hidden border-t border-border">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,transparent,color-mix(in_oklch,var(--primary),transparent_94%)_60%,color-mix(in_oklch,var(--primary),transparent_88%))]"
+        />
+        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="grid gap-10 sm:grid-cols-[1.3fr_1fr_1fr]">
+            <div>
+              <div className="flex items-center gap-2">
+                <div className="flex aspect-square size-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <span className="font-heading text-sm font-semibold">D</span>
+                </div>
+                <span className="font-heading text-lg font-semibold tracking-tight">DMHQ</span>
+              </div>
+              <p className="mt-3 max-w-xs text-sm text-muted-foreground">
+                Tap, buy, done. The operations layer for Instagram and WhatsApp sellers.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold text-foreground">Product</h3>
+              <ul className="mt-3 space-y-2.5 text-sm text-muted-foreground">
+                {[
+                  { href: "#how-it-works", label: "How it works" },
+                  { href: "#features", label: "Features" },
+                  { href: "#pricing", label: "Pricing" },
+                ].map((link) => (
+                  <li key={link.href}>
+                    <a href={link.href} className="group inline-flex items-center gap-1 hover:text-foreground">
+                      {link.label}
+                      <ArrowRight className="size-3.5 -translate-x-1 opacity-0 transition motion-safe:group-hover:translate-x-0 motion-safe:group-hover:opacity-100" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold text-foreground">Account</h3>
+              <ul className="mt-3 space-y-2.5 text-sm text-muted-foreground">
+                {[
+                  { href: "/login", label: "Log in" },
+                  { href: "/register", label: "Get started" },
+                ].map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="group inline-flex items-center gap-1 hover:text-foreground">
+                      {link.label}
+                      <ArrowRight className="size-3.5 -translate-x-1 opacity-0 transition motion-safe:group-hover:translate-x-0 motion-safe:group-hover:opacity-100" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <Link href="/login" className="hover:text-foreground">
-              Log in
-            </Link>
-            <Link href="/register" className="hover:text-foreground">
-              Get started
-            </Link>
-            <span>© {new Date().getFullYear()} DMHQ</span>
+
+          <div className="mt-12 border-t border-border pt-6 text-sm text-muted-foreground">
+            © {new Date().getFullYear()} DMHQ. All rights reserved.
           </div>
         </div>
       </footer>
