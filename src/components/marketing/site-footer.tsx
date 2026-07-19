@@ -2,13 +2,13 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 const productLinks = [
-  { href: "/about", label: "What is DMHQ" },
   { href: "/#how-it-works", label: "How it works" },
   { href: "/#features", label: "Features" },
   { href: "/#pricing", label: "Pricing" },
 ];
 
-const supportLinks = [
+const companyLinks = [
+  { href: "/about", label: "What is DMHQ" },
   { href: "/help", label: "Help Center" },
   { href: "/contact", label: "Community" },
 ];
@@ -69,8 +69,8 @@ export function MarketingFooter() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-foreground">Support</h3>
-            <LinkList links={supportLinks} />
+            <h3 className="text-sm font-semibold text-foreground">Company</h3>
+            <LinkList links={companyLinks} />
           </div>
 
           <div>
