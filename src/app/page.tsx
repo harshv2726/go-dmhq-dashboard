@@ -3,7 +3,6 @@ import Link from "next/link";
 import {
   ArrowRight,
   Boxes,
-  Check,
   CreditCard,
   Link2,
   MessageCircle,
@@ -14,6 +13,8 @@ import {
   Ticket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/reveal";
+import { HowItWorksIllustration } from "@/components/how-it-works-illustration";
 
 export const metadata: Metadata = {
   title: "DMHQ — Your Instagram and WhatsApp are your storefront",
@@ -76,14 +77,17 @@ const features = [
 ];
 
 const storeTypes = [
-  { icon: ShoppingBag, name: "Commerce", description: "Physical products for Instagram sellers" },
-  { icon: Plane, name: "Travel", description: "Tour packages for local travel agents" },
-  { icon: Ticket, name: "Event", description: "Tickets for local event organizers" },
+  {
+    icon: ShoppingBag,
+    name: "Commerce",
+    description: "Physical products for Instagram sellers",
+    colorVar: "--chart-1",
+  },
+  { icon: Plane, name: "Travel", description: "Tour packages for local travel agents", colorVar: "--chart-2" },
+  { icon: Ticket, name: "Event", description: "Tickets for local event organizers", colorVar: "--chart-3" },
 ];
 
 export default function LandingPage() {
-  const [Step1Icon, Step2Icon, Step3Icon] = steps.map((s) => s.icon);
-
   return (
     <div className="flex min-h-svh flex-col">
       <header className="border-b border-border">
@@ -113,14 +117,20 @@ export default function LandingPage() {
             className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[32rem] bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,color-mix(in_oklch,var(--primary),transparent_88%),transparent)]"
           />
           <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8">
-            <h1 className="text-balance font-heading text-4xl font-semibold tracking-tight sm:text-5xl">
+            <h1 className="animate-fade-up text-balance font-heading text-4xl font-semibold tracking-tight motion-reduce:animate-none sm:text-5xl">
               Your Instagram and WhatsApp are your storefront. We handle the rest.
             </h1>
-            <p className="max-w-2xl text-balance text-lg text-muted-foreground">
+            <p
+              className="animate-fade-up max-w-2xl text-balance text-lg text-muted-foreground motion-reduce:animate-none"
+              style={{ animationDelay: "100ms" }}
+            >
               DMHQ is the operations layer for Instagram sellers — orders, payments, inventory, and WhatsApp
               notifications — so you can stay focused on content and customers, not code.
             </p>
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div
+              className="animate-fade-up flex flex-col gap-3 motion-reduce:animate-none sm:flex-row"
+              style={{ animationDelay: "200ms" }}
+            >
               <Button size="lg" className="px-6" asChild>
                 <Link href="/register">Start selling free</Link>
               </Button>
@@ -128,7 +138,10 @@ export default function LandingPage() {
                 <Link href="/login">Log in</Link>
               </Button>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p
+              className="animate-fade-up text-sm text-muted-foreground motion-reduce:animate-none"
+              style={{ animationDelay: "300ms" }}
+            >
               No website. No code. Store live at <span className="font-medium text-foreground">dmhq.app/you</span> in
               under 2 minutes.
             </p>
@@ -138,85 +151,23 @@ export default function LandingPage() {
         {/* How it works */}
         <section id="how-it-works" className="border-t border-border bg-muted/40">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-            <div className="mx-auto max-w-2xl text-center">
+            <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">How it works</h2>
               <p className="mt-2 text-muted-foreground">From DM to delivered, in three steps.</p>
-            </div>
+            </Reveal>
 
             {/* Illustration: a checkout link opened on a phone, with the three
-                steps fanned around it as floating cards. Decorative — the
+                steps fanned around it as floating cards that swap the phone's
+                screen on hover (auto-cycling otherwise). Decorative — the
                 numbered list below carries the actual content for anyone on
                 a small screen or a screen reader. */}
-            <div className="relative mx-auto mt-16 hidden h-[380px] max-w-3xl lg:block">
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_50%_60%_at_50%_40%,color-mix(in_oklch,var(--primary),transparent_92%),transparent)]"
-              />
-
-              {/* Phone */}
-              <div className="absolute left-1/2 top-0 w-[220px] -translate-x-1/2 rounded-[2.25rem] border-[6px] border-foreground bg-foreground shadow-xl">
-                <div className="absolute left-1/2 top-0 h-5 w-24 -translate-x-1/2 rounded-b-2xl bg-foreground" />
-                <div className="h-[360px] overflow-hidden rounded-[1.75rem] bg-card px-4 pb-4 pt-9">
-                  <p className="truncate text-[11px] text-muted-foreground">dmhq.app/priya</p>
-                  <div className="mt-4 flex items-center gap-3 rounded-xl border border-border p-2.5">
-                    <div className="size-12 shrink-0 rounded-lg bg-accent" />
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-semibold">Handmade clay mug</p>
-                      <p className="text-xs text-muted-foreground">₹499</p>
-                    </div>
-                  </div>
-                  <div className="mt-3 rounded-lg bg-primary py-2.5 text-center text-xs font-medium text-primary-foreground">
-                    Pay ₹499
-                  </div>
-                  <div className="mt-5 flex items-center gap-2 rounded-lg bg-accent px-2.5 py-2.5">
-                    <div className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                      <Check className="size-3" />
-                    </div>
-                    <p className="text-[11px] leading-tight text-accent-foreground">
-                      Order confirmed — notified on WhatsApp
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Fanned step cards */}
-              <div className="absolute left-0 top-16 w-56 -rotate-6 rounded-xl border border-border bg-card p-4 shadow-lg">
-                <div className="flex items-center gap-2">
-                  <div className="flex size-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                    <Step1Icon className="size-3.5" />
-                  </div>
-                  <span className="font-heading text-xs font-semibold text-muted-foreground">Step 1</span>
-                </div>
-                <p className="mt-2 text-sm font-semibold">{steps[0].title}</p>
-                <p className="mt-1 text-xs text-muted-foreground">Get a checkout link — no website to build.</p>
-              </div>
-
-              <div className="absolute right-0 top-6 w-56 rotate-6 rounded-xl border border-border bg-card p-4 shadow-lg">
-                <div className="flex items-center gap-2">
-                  <div className="flex size-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                    <Step2Icon className="size-3.5" />
-                  </div>
-                  <span className="font-heading text-xs font-semibold text-muted-foreground">Step 2</span>
-                </div>
-                <p className="mt-2 text-sm font-semibold">{steps[1].title}</p>
-                <p className="mt-1 text-xs text-muted-foreground">Drop it in your bio, a DM, or a status.</p>
-              </div>
-
-              <div className="absolute bottom-0 right-6 w-56 -rotate-3 rounded-xl border border-border bg-card p-4 shadow-lg">
-                <div className="flex items-center gap-2">
-                  <div className="flex size-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                    <Step3Icon className="size-3.5" />
-                  </div>
-                  <span className="font-heading text-xs font-semibold text-muted-foreground">Step 3</span>
-                </div>
-                <p className="mt-2 text-sm font-semibold">{steps[2].title}</p>
-                <p className="mt-1 text-xs text-muted-foreground">Order lands in your dashboard. You ship it.</p>
-              </div>
-            </div>
+            <Reveal delayMs={150}>
+              <HowItWorksIllustration />
+            </Reveal>
 
             <div className="mt-12 grid gap-8 sm:grid-cols-3 lg:mt-16">
-              {steps.map((step) => (
-                <div key={step.number} className="flex flex-col items-start gap-3">
+              {steps.map((step, i) => (
+                <Reveal key={step.number} delayMs={i * 100} className="flex flex-col items-start gap-3">
                   <div className="flex items-center gap-3">
                     <div className="flex size-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
                       <step.icon className="size-5" />
@@ -227,7 +178,7 @@ export default function LandingPage() {
                   </div>
                   <h3 className="font-heading text-lg font-semibold">{step.title}</h3>
                   <p className="text-sm text-muted-foreground">{step.description}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -236,23 +187,25 @@ export default function LandingPage() {
         {/* Features */}
         <section id="features" className="border-t border-border">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-            <div className="mx-auto max-w-2xl text-center">
+            <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
                 Everything you need. Nothing you don&apos;t.
               </h2>
               <p className="mt-2 text-muted-foreground">
                 A thin, focused toolkit — not a bloated e-commerce platform you&apos;ll never fully use.
               </p>
-            </div>
+            </Reveal>
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {features.map((feature) => (
-                <div key={feature.title} className="rounded-xl border border-border bg-card p-6">
-                  <div className="flex size-9 items-center justify-center rounded-lg bg-accent text-accent-foreground">
-                    <feature.icon className="size-5" />
+              {features.map((feature, i) => (
+                <Reveal key={feature.title} delayMs={(i % 3) * 100}>
+                  <div className="h-full rounded-xl border border-border bg-card p-6 transition-transform duration-200 hover:-translate-y-1 hover:shadow-md">
+                    <div className="flex size-9 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+                      <feature.icon className="size-5" />
+                    </div>
+                    <h3 className="mt-4 font-heading text-base font-semibold">{feature.title}</h3>
+                    <p className="mt-1.5 text-sm text-muted-foreground">{feature.description}</p>
                   </div>
-                  <h3 className="mt-4 font-heading text-base font-semibold">{feature.title}</h3>
-                  <p className="mt-1.5 text-sm text-muted-foreground">{feature.description}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -261,21 +214,29 @@ export default function LandingPage() {
         {/* Store types */}
         <section className="border-t border-border bg-muted/40">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-            <div className="mx-auto max-w-2xl text-center">
+            <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Built for how you sell</h2>
               <p className="mt-2 text-muted-foreground">
                 Whatever you&apos;re selling on social, there&apos;s a store type for it.
               </p>
-            </div>
+            </Reveal>
             <div className="mt-12 grid gap-6 sm:grid-cols-3">
-              {storeTypes.map((type) => (
-                <div key={type.name} className="flex flex-col items-center gap-3 text-center">
-                  <div className="flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <type.icon className="size-6" />
+              {storeTypes.map((type, i) => (
+                <Reveal key={type.name} delayMs={i * 100}>
+                  <div className="h-full rounded-xl border border-border bg-card p-6 text-center transition-transform duration-200 hover:-translate-y-1 hover:shadow-md">
+                    <div
+                      className="mx-auto flex size-12 items-center justify-center rounded-lg"
+                      style={{
+                        backgroundColor: `color-mix(in oklch, var(${type.colorVar}), transparent 85%)`,
+                        color: `var(${type.colorVar})`,
+                      }}
+                    >
+                      <type.icon className="size-6" />
+                    </div>
+                    <h3 className="mt-4 font-heading text-base font-semibold">{type.name}</h3>
+                    <p className="mt-1.5 text-sm text-muted-foreground">{type.description}</p>
                   </div>
-                  <h3 className="font-heading text-base font-semibold">{type.name}</h3>
-                  <p className="text-sm text-muted-foreground">{type.description}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -283,7 +244,7 @@ export default function LandingPage() {
 
         {/* Pricing */}
         <section id="pricing" className="border-t border-border">
-          <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
+          <Reveal className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
             <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Simple, honest pricing</h2>
             <p className="mt-2 text-muted-foreground">
               Plans from <span className="font-medium text-foreground">₹199–₹499/month</span>, plus a small fee per
@@ -292,12 +253,12 @@ export default function LandingPage() {
             <Button size="lg" className="mt-6 px-6" asChild>
               <Link href="/register">Get started</Link>
             </Button>
-          </div>
+          </Reveal>
         </section>
 
         {/* Final CTA */}
         <section className="border-t border-border bg-primary text-primary-foreground">
-          <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-center sm:px-6 lg:px-8">
+          <Reveal className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-center sm:px-6 lg:px-8">
             <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
               Ready to turn your DMs into orders?
             </h2>
@@ -307,7 +268,7 @@ export default function LandingPage() {
             <Button size="lg" variant="secondary" className="mt-2 px-6" asChild>
               <Link href="/register">Start selling free</Link>
             </Button>
-          </div>
+          </Reveal>
         </section>
       </main>
 
