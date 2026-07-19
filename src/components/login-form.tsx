@@ -25,7 +25,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
     setIsSubmitting(true);
     try {
       await login(email, password);
-      router.replace("/");
+      router.replace("/home");
     } catch (err) {
       toast.error(err instanceof ApiError ? err.message : "Login failed");
     } finally {

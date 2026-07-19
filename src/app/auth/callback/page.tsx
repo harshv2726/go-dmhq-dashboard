@@ -40,7 +40,7 @@ export default function OAuthCallbackPage() {
 
     completeOAuthLogin(accessToken).then((ok) => {
       if (ok) {
-        router.replace("/");
+        router.replace("/home");
       } else {
         toast.error("Failed to complete login");
         router.replace("/login");

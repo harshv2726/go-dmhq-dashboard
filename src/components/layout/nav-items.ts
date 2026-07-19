@@ -1,7 +1,7 @@
 import { LayoutDashboard, Package, FolderOpen, ShoppingBag, Settings, Users, Boxes } from "lucide-react";
 
 export const mainNavItems = [
-  { href: "/", label: "Home", icon: LayoutDashboard },
+  { href: "/home", label: "Home", icon: LayoutDashboard },
   { href: "/orders", label: "Orders", icon: ShoppingBag },
   {
     href: "/products",

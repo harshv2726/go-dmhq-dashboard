@@ -1,6 +1,7 @@
 "use client";
 
 import useSWR from "swr";
+import { Clock, IndianRupee, Package, ShoppingBag } from "lucide-react";
 import { api } from "@/lib/api";
 import { useStore } from "@/lib/use-store";
 import type { DashboardStats } from "@/lib/types";
@@ -20,10 +21,14 @@ export default function DashboardHomePage() {
 
   const skeleton = <Skeleton className="h-8 w-20" />;
   const items = [
-    { label: "Pending orders", value: isLoading || !stats ? skeleton : stats.pending_orders },
-    { label: "Total orders", value: isLoading || !stats ? skeleton : stats.total_orders },
-    { label: "Products", value: isLoading || !stats ? skeleton : stats.total_products },
-    { label: "Revenue", value: isLoading || !stats ? skeleton : formatCurrency(stats.total_revenue) },
+    { label: "Pending orders", value: isLoading || !stats ? skeleton : stats.pending_orders, icon: Clock },
+    { label: "Total orders", value: isLoading || !stats ? skeleton : stats.total_orders, icon: ShoppingBag },
+    { label: "Products", value: isLoading || !stats ? skeleton : stats.total_products, icon: Package },
+    {
+      label: "Revenue",
+      value: isLoading || !stats ? skeleton : formatCurrency(stats.total_revenue),
+      icon: IndianRupee,
+    },
   ];
 
   return (

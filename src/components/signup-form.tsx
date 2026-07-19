@@ -42,7 +42,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
     setIsSubmitting(true);
     try {
       await register({ name, email, password, store_name: storeName, store_slug: storeSlug });
-      router.replace("/");
+      router.replace("/home");
     } catch (err) {
       toast.error(err instanceof ApiError ? err.message : "Registration failed");
     } finally {
