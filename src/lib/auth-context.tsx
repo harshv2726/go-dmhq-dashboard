@@ -10,6 +10,9 @@ export interface AuthUser {
   storeId: string;
   storeSlug: string;
   staffRole: StaffRole;
+  // True when this session came from a DMHQ support agent (Superboard)
+  // entering an approved access request, not a real seller login.
+  isSupportSession: boolean;
 }
 
 interface RegisterInput {
@@ -32,7 +35,13 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 function toUser(res: AuthResponse): AuthUser {
-  return { userId: res.user_id, storeId: res.store_id, storeSlug: res.store_slug, staffRole: res.staff_role };
+  return {
+    userId: res.user_id,
+    storeId: res.store_id,
+    storeSlug: res.store_slug,
+    staffRole: res.staff_role,
+    isSupportSession: Boolean(res.access_request_id),
+  };
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {

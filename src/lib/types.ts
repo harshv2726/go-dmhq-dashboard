@@ -27,6 +27,10 @@ export interface AuthResponse {
   store_id: string;
   store_slug: string;
   staff_role: StaffRole;
+  role: "seller" | "support";
+  // Set only when this session was minted by Superboard (DMHQ support)
+  // entering an approved access request — see auth.IssueActingTokens.
+  access_request_id?: string;
 }
 
 export interface Store {
@@ -200,4 +204,23 @@ export interface Customer {
 
 export interface UploadResult {
   url: string;
+}
+
+export type AccessRequestStatus = "pending" | "approved" | "denied" | "revoked" | "expired";
+
+// A DMHQ support agent's request for temporary access to this store,
+// awaiting (or having received) the owner's approval — see internal/support
+// in the backend.
+export interface AccessRequest {
+  id: string;
+  store_id: string;
+  requested_by_id: string;
+  reason: string;
+  status: AccessRequestStatus;
+  approved_at: string | null;
+  denied_at: string | null;
+  revoked_at: string | null;
+  expires_at: string | null;
+  created_at: string;
+  updated_at: string;
 }

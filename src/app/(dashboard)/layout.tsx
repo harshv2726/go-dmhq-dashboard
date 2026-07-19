@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
+import { SupportSessionBanner } from "@/components/support-session-banner";
+import { PendingAccessRequestBanner } from "@/components/pending-access-request-banner";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -27,6 +29,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
+        {user.isSupportSession ? <SupportSessionBanner /> : <PendingAccessRequestBanner />}
         <SiteHeader />
         <div className="@container/main flex-1 overflow-x-hidden overflow-y-auto px-4 py-4 md:px-8">{children}</div>
       </SidebarInset>
