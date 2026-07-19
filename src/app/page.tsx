@@ -116,7 +116,7 @@ export default function LandingPage() {
               className="animate-fade-up text-sm text-muted-foreground motion-reduce:animate-none"
               style={{ animationDelay: "300ms" }}
             >
-              No website. No code. Store live at <span className="font-medium text-foreground">dmhq.app/you</span> in
+              No website. No code. Store live at <span className="font-medium text-foreground">dmhq.in/you</span> in
               under 2 minutes.
             </p>
           </div>

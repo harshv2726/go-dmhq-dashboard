@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const sellerFaqs = [
   {
     q: "How do I set up a store?",
-    a: "Create an account and pick a store name — DMHQ generates your store URL (dmhq.app/your-store) automatically. You can start adding products immediately; there's no theme or website to build first.",
+    a: "Create an account and pick a store name — DMHQ generates your store URL (dmhq.in/your-store) automatically. You can start adding products immediately; there's no theme or website to build first.",
   },
   {
     q: "How do checkout links work?",

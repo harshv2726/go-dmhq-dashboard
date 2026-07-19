@@ -64,7 +64,7 @@ export function MarketingFooter() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-foreground">Product</h3>
+            <h3 className="text-sm font-semibold text-foreground">Solution</h3>
             <LinkList links={productLinks} />
           </div>
 

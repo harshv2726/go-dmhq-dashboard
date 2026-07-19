@@ -6,7 +6,7 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-const SUPPORT_EMAIL = "support@dmhq.app";
+const SUPPORT_EMAIL = "support@dmhq.in";
 
 // There's no support-ticket backend to submit to, so this opens the
 // visitor's own mail client with the message pre-filled — a real, working

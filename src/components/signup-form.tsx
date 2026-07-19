@@ -102,7 +102,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
           <Field>
             <FieldLabel htmlFor="store_slug">Store URL</FieldLabel>
             <div className="flex items-center gap-1 text-sm text-muted-foreground">
-              <span className="shrink-0">dmhq.app/</span>
+              <span className="shrink-0">dmhq.in/</span>
               <Input
                 id="store_slug"
                 required

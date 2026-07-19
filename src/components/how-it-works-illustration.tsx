@@ -68,7 +68,7 @@ export function HowItWorksIllustration() {
         <div className="absolute left-1/2 top-0 h-5 w-24 -translate-x-1/2 rounded-b-2xl bg-foreground" />
         <div className="relative h-90 overflow-hidden rounded-[1.75rem] bg-card">
           <PhoneScreen visible={active === 0}>
-            <p className="truncate text-[11px] text-muted-foreground">dmhq.app/priya</p>
+            <p className="truncate text-[11px] text-muted-foreground">dmhq.in/priya</p>
             <div className="mt-4 flex items-center gap-3 rounded-xl border border-border p-2.5">
               <div className="size-12 shrink-0 rounded-lg bg-accent" />
               <div className="min-w-0">
@@ -88,7 +88,7 @@ export function HowItWorksIllustration() {
               <div className="size-12 shrink-0 rounded-lg bg-accent" />
               <div className="min-w-0">
                 <p className="truncate text-sm font-semibold">Handmade clay mug</p>
-                <p className="truncate text-[11px] text-muted-foreground">dmhq.app/priya/mug</p>
+                <p className="truncate text-[11px] text-muted-foreground">dmhq.in/priya/mug</p>
               </div>
             </div>
             <div className="mt-5 ml-8 flex items-center gap-1.5 rounded-2xl rounded-br-sm bg-primary px-3 py-2 text-primary-foreground">
@@ -98,7 +98,7 @@ export function HowItWorksIllustration() {
           </PhoneScreen>
 
           <PhoneScreen visible={active === 2}>
-            <p className="truncate text-[11px] text-muted-foreground">dmhq.app/priya</p>
+            <p className="truncate text-[11px] text-muted-foreground">dmhq.in/priya</p>
             <div className="mt-4 flex items-center gap-3 rounded-xl border border-border p-2.5">
               <div className="size-12 shrink-0 rounded-lg bg-accent" />
               <div className="min-w-0">

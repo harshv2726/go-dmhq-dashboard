@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dmhq.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dmhq.in";
 
 const routes: { path: string; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]; priority: number }[] =
   [

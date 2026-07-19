@@ -22,7 +22,7 @@ export default function PrivacyPage() {
               <h2>Overview</h2>
               <p>
                 DMHQ (&ldquo;we&rdquo;, &ldquo;us&rdquo;) provides the software sellers use to run a store —
-                including the seller dashboard and the storefronts it powers at dmhq.app/*. This policy covers both
+                including the seller dashboard and the storefronts it powers at dmhq.in/*. This policy covers both
                 sides of that: data we collect from sellers who run a store on DMHQ, and data collected from
                 customers who buy from those stores. It doesn&apos;t cover what an individual seller does with the
                 data once they have it — for example, how they contact a customer directly outside the platform.
@@ -92,8 +92,8 @@ export default function PrivacyPage() {
               <h2>Your rights</h2>
               <p>
                 You can ask us to access, correct, or delete the personal data we hold about you by emailing{" "}
-                <a href="mailto:privacy@dmhq.app" className="text-foreground underline underline-offset-2">
-                  privacy@dmhq.app
+                <a href="mailto:privacy@dmhq.in" className="text-foreground underline underline-offset-2">
+                  privacy@dmhq.in
                 </a>
                 . For data held about you by a specific store you bought from, we may need to check with that
                 seller before acting on the request.
@@ -112,8 +112,8 @@ export default function PrivacyPage() {
               <h2>Contact</h2>
               <p>
                 Questions about this policy?{" "}
-                <a href="mailto:privacy@dmhq.app" className="text-foreground underline underline-offset-2">
-                  privacy@dmhq.app
+                <a href="mailto:privacy@dmhq.in" className="text-foreground underline underline-offset-2">
+                  privacy@dmhq.in
                 </a>
               </p>
             </section>
