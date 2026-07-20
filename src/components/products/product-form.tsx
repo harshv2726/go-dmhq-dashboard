@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -270,11 +271,11 @@ export function ProductForm({ initial, onSubmit, submitLabel }: ProductFormProps
           </div>
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
-            <Textarea
+            <RichTextEditor
               id="description"
-              rows={4}
               value={values.description}
-              onChange={(e) => set("description", e.target.value)}
+              onChange={(html) => set("description", html)}
+              placeholder="Describe your product…"
             />
           </div>
           <div className="space-y-2">

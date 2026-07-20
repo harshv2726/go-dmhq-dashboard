@@ -38,7 +38,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
       <form onSubmit={handleSubmit}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
-            <span className="text-xl font-bold tracking-tight">DMHQ.</span>
+            <span className="font-heading text-xl font-semibold tracking-tight">DMHQ.</span>
             <FieldDescription>
               Tap, buy, done.
               <br />

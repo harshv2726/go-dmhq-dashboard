@@ -42,7 +42,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
     setIsSubmitting(true);
     try {
       await register({ name, email, password, store_name: storeName, store_slug: storeSlug });
-      router.replace("/home");
+      router.replace("/onboarding");
     } catch (err) {
       toast.error(err instanceof ApiError ? err.message : "Registration failed");
     } finally {
@@ -55,7 +55,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
       <form onSubmit={handleSubmit}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
-            <span className="text-xl font-bold tracking-tight">DMHQ.</span>
+            <span className="font-heading text-xl font-semibold tracking-tight">DMHQ.</span>
             <FieldDescription>
               Tap, buy, done.
               <br />

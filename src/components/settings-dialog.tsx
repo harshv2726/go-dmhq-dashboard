@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { Bell, ChartNoAxesColumn, FileText, Percent, Store as StoreIcon, Truck } from "lucide-react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import {
@@ -16,34 +14,32 @@ import {
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useStore } from "@/lib/use-store";
+import { settingsSections, type SettingsSectionKey } from "@/components/layout/nav-items";
 import { GeneralBrandForm } from "@/components/settings/general-brand-form";
 import { ShippingSettingsForm } from "@/components/settings/shipping-settings-form";
 import { TaxSettingsForm } from "@/components/settings/tax-settings-form";
 import { PoliciesSettingsForm } from "@/components/settings/policies-settings-form";
 import { NotificationsSettingsForm } from "@/components/settings/notifications-settings-form";
 import { AnalyticsSettingsForm } from "@/components/settings/analytics-settings-form";
-
-const sections = [
-  { key: "general", label: "General & Brand", icon: StoreIcon },
-  { key: "shipping", label: "Shipping & Delivery", icon: Truck },
-  { key: "taxes", label: "Taxes", icon: Percent },
-  { key: "policies", label: "Policies", icon: FileText },
-  { key: "notifications", label: "Notifications", icon: Bell },
-  { key: "analytics", label: "Analytics", icon: ChartNoAxesColumn },
-] as const;
-
-type SectionKey = (typeof sections)[number]["key"];
+import { AccessRequestsSettingsForm } from "@/components/settings/access-requests-settings-form";
+import { BillingSettingsForm } from "@/components/settings/billing-settings-form";
 
 interface SettingsDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  activeSection: SettingsSectionKey;
+  onActiveSectionChange: (section: SettingsSectionKey) => void;
 }
 
-export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
-  const [active, setActive] = useState<SectionKey>("general");
+export function SettingsDialog({
+  open,
+  onOpenChange,
+  activeSection: active,
+  onActiveSectionChange,
+}: SettingsDialogProps) {
   const { store, isLoading, refresh } = useStore();
 
-  const activeLabel = sections.find((s) => s.key === active)?.label ?? "";
+  const activeLabel = settingsSections.find((s) => s.key === active)?.label ?? "";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -56,9 +52,12 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
               <SidebarGroup>
                 <SidebarGroupContent>
                   <SidebarMenu>
-                    {sections.map((section) => (
+                    {settingsSections.map((section) => (
                       <SidebarMenuItem key={section.key}>
-                        <SidebarMenuButton isActive={section.key === active} onClick={() => setActive(section.key)}>
+                        <SidebarMenuButton
+                          isActive={section.key === active}
+                          onClick={() => onActiveSectionChange(section.key)}
+                        >
                           <section.icon />
                           <span>{section.label}</span>
                         </SidebarMenuButton>
@@ -100,6 +99,10 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                   {active === "analytics" && (
                     <AnalyticsSettingsForm key={`analytics-${store.id}`} initial={store} onSaved={refresh} />
                   )}
+                  {active === "billing" && (
+                    <BillingSettingsForm key={`billing-${store.id}`} initial={store} onSaved={refresh} />
+                  )}
+                  {active === "access-requests" && <AccessRequestsSettingsForm />}
                 </>
               )}
             </div>

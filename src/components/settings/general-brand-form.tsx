@@ -10,6 +10,61 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ImageUploader } from "@/components/media/image-uploader";
+import { cn } from "@/lib/utils";
+
+interface ThemePreset {
+  key: string;
+  label: string;
+  fit: string;
+  background: string;
+  text: string;
+  accent: string;
+  cta: string;
+  subtle: string;
+}
+
+const THEME_PRESETS: ThemePreset[] = [
+  {
+    key: "minimal",
+    label: "Minimal / Premium",
+    fit: "Works well for most product types",
+    background: "#FFFFFF",
+    text: "#1A1A1A",
+    accent: "#2D2D2D",
+    cta: "#000000",
+    subtle: "#F5F5F5",
+  },
+  {
+    key: "warm",
+    label: "Warm / Trustworthy",
+    fit: "Lifestyle, wellness, food brands",
+    background: "#FDFBF7",
+    text: "#2B2620",
+    accent: "#C97C4F",
+    cta: "#8B3A2B",
+    subtle: "#EFE7DC",
+  },
+  {
+    key: "bold",
+    label: "Bold / Modern",
+    fit: "Fashion, streetwear, gen-z audience",
+    background: "#0F0F0F",
+    text: "#FFFFFF",
+    accent: "#FF3B30",
+    cta: "#FF3B30",
+    subtle: "#1E1E1E",
+  },
+  {
+    key: "soft",
+    label: "Soft / Feminine",
+    fit: "Beauty, skincare",
+    background: "#FFF8F5",
+    text: "#3A2E2E",
+    accent: "#E8A798",
+    cta: "#D67D68",
+    subtle: "#F5E6E0",
+  },
+];
 
 interface FormState {
   name: string;
@@ -18,6 +73,11 @@ interface FormState {
   logo_url: string | null;
   banner_url: string | null;
   theme_color: string;
+  theme_background: string;
+  theme_text: string;
+  theme_cta_color: string;
+  theme_subtle: string;
+  theme_preset: string;
   font_family: string;
   instagram_url: string;
   whatsapp_number: string;
@@ -39,6 +99,11 @@ function toFormState(s: Store): FormState {
     logo_url: s.logo_url,
     banner_url: s.banner_url,
     theme_color: s.theme_color,
+    theme_background: s.theme_background,
+    theme_text: s.theme_text,
+    theme_cta_color: s.theme_cta_color,
+    theme_subtle: s.theme_subtle,
+    theme_preset: s.theme_preset ?? "",
     font_family: s.font_family ?? "",
     instagram_url: s.instagram_url ?? "",
     whatsapp_number: s.whatsapp_number ?? "",
@@ -64,6 +129,24 @@ export function GeneralBrandForm({ initial, onSaved }: GeneralBrandFormProps) {
 
   function set<K extends keyof FormState>(key: K, value: FormState[K]) {
     setValues((v) => ({ ...v, [key]: value }));
+  }
+
+  // Manually editing any brand color after picking a preset means the
+  // palette no longer matches it exactly, so drop back to "custom".
+  function setColor<K extends keyof FormState>(key: K, value: FormState[K]) {
+    setValues((v) => ({ ...v, [key]: value, theme_preset: "" }));
+  }
+
+  function applyPreset(preset: ThemePreset) {
+    setValues((v) => ({
+      ...v,
+      theme_preset: preset.key,
+      theme_background: preset.background,
+      theme_text: preset.text,
+      theme_color: preset.accent,
+      theme_cta_color: preset.cta,
+      theme_subtle: preset.subtle,
+    }));
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -179,20 +262,98 @@ export function GeneralBrandForm({ initial, onSaved }: GeneralBrandFormProps) {
               />
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="space-y-3">
+            <Label>Color palette</Label>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {THEME_PRESETS.map((preset) => (
+                <button
+                  key={preset.key}
+                  type="button"
+                  onClick={() => applyPreset(preset)}
+                  className={cn(
+                    "rounded-lg border p-3 text-left transition-colors hover:border-ring",
+                    values.theme_preset === preset.key && "border-ring ring-2 ring-ring/30",
+                  )}
+                >
+                  <div className="mb-2 flex overflow-hidden rounded-md border">
+                    {[preset.background, preset.accent, preset.cta, preset.subtle].map((c, i) => (
+                      <span key={i} className="h-6 flex-1" style={{ backgroundColor: c }} />
+                    ))}
+                  </div>
+                  <p className="text-sm font-medium">{preset.label}</p>
+                  <p className="text-xs text-muted-foreground">{preset.fit}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <div className="space-y-2">
-              <Label htmlFor="theme_color">Theme color</Label>
+              <Label htmlFor="theme_background">Background</Label>
+              <div className="flex items-center gap-2">
+                <Input
+                  id="theme_background"
+                  type="color"
+                  className="h-9 w-14 p-1"
+                  value={values.theme_background}
+                  onChange={(e) => setColor("theme_background", e.target.value)}
+                />
+                <Input value={values.theme_background} onChange={(e) => setColor("theme_background", e.target.value)} />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="theme_text">Text</Label>
+              <div className="flex items-center gap-2">
+                <Input
+                  id="theme_text"
+                  type="color"
+                  className="h-9 w-14 p-1"
+                  value={values.theme_text}
+                  onChange={(e) => setColor("theme_text", e.target.value)}
+                />
+                <Input value={values.theme_text} onChange={(e) => setColor("theme_text", e.target.value)} />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="theme_color">Accent</Label>
               <div className="flex items-center gap-2">
                 <Input
                   id="theme_color"
                   type="color"
                   className="h-9 w-14 p-1"
                   value={values.theme_color}
-                  onChange={(e) => set("theme_color", e.target.value)}
+                  onChange={(e) => setColor("theme_color", e.target.value)}
                 />
-                <Input value={values.theme_color} onChange={(e) => set("theme_color", e.target.value)} />
+                <Input value={values.theme_color} onChange={(e) => setColor("theme_color", e.target.value)} />
               </div>
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="theme_cta_color">CTA (buttons)</Label>
+              <div className="flex items-center gap-2">
+                <Input
+                  id="theme_cta_color"
+                  type="color"
+                  className="h-9 w-14 p-1"
+                  value={values.theme_cta_color}
+                  onChange={(e) => setColor("theme_cta_color", e.target.value)}
+                />
+                <Input value={values.theme_cta_color} onChange={(e) => setColor("theme_cta_color", e.target.value)} />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="theme_subtle">Subtle</Label>
+              <div className="flex items-center gap-2">
+                <Input
+                  id="theme_subtle"
+                  type="color"
+                  className="h-9 w-14 p-1"
+                  value={values.theme_subtle}
+                  onChange={(e) => setColor("theme_subtle", e.target.value)}
+                />
+                <Input value={values.theme_subtle} onChange={(e) => setColor("theme_subtle", e.target.value)} />
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="font_family">Font family</Label>
               <Input id="font_family" value={values.font_family} onChange={(e) => set("font_family", e.target.value)} />

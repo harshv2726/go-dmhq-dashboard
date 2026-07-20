@@ -42,6 +42,11 @@ export interface Store {
   logo_url: string | null;
   banner_url: string | null;
   theme_color: string;
+  theme_background: string;
+  theme_text: string;
+  theme_cta_color: string;
+  theme_subtle: string;
+  theme_preset: string | null;
   font_family: string | null;
   instagram_url: string | null;
   whatsapp_number: string | null;
@@ -72,8 +77,50 @@ export interface Store {
   whatsapp_notifications_enabled: boolean;
   meta_pixel_id: string | null;
   ga4_measurement_id: string | null;
+  plan: "" | "backend" | "full";
+  plan_expires_at: string | null;
+  storefront_live: boolean;
   created_at: string;
   updated_at: string;
+}
+
+export type Plan = "backend" | "full";
+
+export interface PlanInfo {
+  key: Plan;
+  name: string;
+  priceLabel: string;
+  amountPaise: number;
+  description: string;
+  features: string[];
+}
+
+// Prices are enforced server-side (internal/billing) — this is display
+// only, kept in sync by hand.
+export const PLANS: PlanInfo[] = [
+  {
+    key: "backend",
+    name: "Backend",
+    priceLabel: "₹199/mo",
+    amountPaise: 19900,
+    description: "Run your business from the dashboard — no public storefront.",
+    features: ["Seller dashboard", "Products & inventory", "Orders & customers", "WhatsApp notifications"],
+  },
+  {
+    key: "full",
+    name: "Full access",
+    priceLabel: "₹499/mo",
+    amountPaise: 49900,
+    description: "Everything in Backend, plus a live storefront customers can buy from.",
+    features: ["Everything in Backend", "Public storefront at dmhq.in/you", "Checkout links & payments", "Storefront customization"],
+  },
+];
+
+export interface SubscribeResponse {
+  razorpay_order_id: string;
+  amount: number;
+  currency: string;
+  key_id: string;
 }
 
 export interface ProductImage {
@@ -223,4 +270,25 @@ export interface AccessRequest {
   expires_at: string | null;
   created_at: string;
   updated_at: string;
+}
+
+export type MenuLinkType = "url" | "collection" | "product";
+
+export interface MenuChild {
+  id: string;
+  menu_item_id: string;
+  label: string;
+  link_type: MenuLinkType;
+  link_value: string;
+  position: number;
+}
+
+export interface MenuItem {
+  id: string;
+  store_id: string;
+  label: string;
+  link_type: MenuLinkType;
+  link_value: string;
+  position: number;
+  children: MenuChild[];
 }

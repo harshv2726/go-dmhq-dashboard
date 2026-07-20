@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import useSWR from "swr";
 import { toast } from "sonner";
-import { Plus } from "lucide-react";
+import { Package, Plus } from "lucide-react";
 import { api, ApiError } from "@/lib/api";
 import type { Paginated, Product } from "@/lib/types";
 import {
@@ -23,8 +23,9 @@ import { DataTable } from "@/components/products/data-table";
 import { columns } from "@/components/products/columns";
 import { PageHeader } from "@/components/layout/page-header";
 import { PaginationControls } from "@/components/layout/pagination-controls";
+import { EmptyState } from "@/components/layout/empty-state";
 
-const PAGE_SIZE = 50;
+const PAGE_SIZE = 10;
 
 export default function ProductsPage() {
   const [page, setPage] = useState(1);
@@ -80,7 +81,19 @@ export default function ProductsPage() {
           ))}
         </div>
       ) : response.items.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No products yet. Create your first one.</p>
+        <EmptyState
+          icon={Package}
+          title="No products yet"
+          description="Add your first product to start selling."
+          action={
+            <Button asChild size="sm">
+              <Link href="/products/new">
+                <Plus className="h-4 w-4" />
+                New product
+              </Link>
+            </Button>
+          }
+        />
       ) : (
         <>
           <DataTable columns={columns} data={response.items} meta={{ onDelete: setToDelete }} />

@@ -1,22 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
+import { Search, Users } from "lucide-react";
 import { api } from "@/lib/api";
 import { useStore } from "@/lib/use-store";
 import type { Customer, Paginated } from "@/lib/types";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PageHeader } from "@/components/layout/page-header";
 import { PaginationControls } from "@/components/layout/pagination-controls";
+import { EmptyState } from "@/components/layout/empty-state";
 
 const PAGE_SIZE = 50;
 
 export default function CustomersPage() {
   const { store } = useStore();
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setSearch(searchInput.trim());
+      setPage(1);
+    }, 300);
+    return () => clearTimeout(t);
+  }, [searchInput]);
+
+  const searchQs = search ? `&search=${encodeURIComponent(search)}` : "";
   const { data: response, isLoading } = useSWR<Paginated<Customer>>(
-    `/api/v1/seller/customers?page=${page}&limit=${PAGE_SIZE}`,
+    `/api/v1/seller/customers?page=${page}&limit=${PAGE_SIZE}${searchQs}`,
     (path: string) => api.get<Paginated<Customer>>(path),
   );
 
@@ -28,6 +43,16 @@ export default function CustomersPage() {
     <div className="space-y-6">
       <PageHeader title="Customers" description="Everyone who has ordered from your store." />
 
+      <div className="relative w-64">
+        <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
+        <Input
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          placeholder="Search name, email, phone…"
+          className="pl-8"
+        />
+      </div>
+
       {isLoading || !response ? (
         <div className="space-y-2">
           {Array.from({ length: 4 }).map((_, i) => (
@@ -35,7 +60,19 @@ export default function CustomersPage() {
           ))}
         </div>
       ) : response.items.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No customers yet — they&apos;ll show up here after their first order.</p>
+        search ? (
+          <EmptyState
+            icon={Users}
+            title="No matching customers"
+            description="Try a different search term."
+          />
+        ) : (
+          <EmptyState
+            icon={Users}
+            title="No customers yet"
+            description="They'll show up here after their first order."
+          />
+        )
       ) : (
         <>
           <div className="overflow-x-auto rounded-md border">

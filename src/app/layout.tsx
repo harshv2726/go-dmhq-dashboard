@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
-import { Geist_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "@/components/theme-provider";
 
-// --font-sans is a plain system-ui stack set directly in globals.css
-// (matches dashboard-concept-ui-theme's main.css exactly), no web font needed.
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+// Base UI face (--font-sans) and heading face (--font-heading) both resolve
+// to Bricolage Grotesque — see globals.css.
+const bricolageGrotesque = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
 });
 
@@ -25,13 +31,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistMono.variable} h-full antialiased`}
+      className={`${geistMono.variable} ${bricolageGrotesque.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <TooltipProvider>
-          <AuthProvider>{children}</AuthProvider>
-        </TooltipProvider>
-        <Toaster />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <TooltipProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </TooltipProvider>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

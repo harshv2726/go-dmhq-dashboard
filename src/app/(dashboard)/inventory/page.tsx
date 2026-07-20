@@ -1,15 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { toast } from "sonner";
+import { Boxes, Search } from "lucide-react";
 import { api, ApiError } from "@/lib/api";
 import type { Paginated, Product, ProductVariant } from "@/lib/types";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PageHeader } from "@/components/layout/page-header";
 import { PaginationControls } from "@/components/layout/pagination-controls";
+import { EmptyState } from "@/components/layout/empty-state";
 
 // Paginated at the product level (not variant level — there's no dedicated
 // variant-listing endpoint), so a "page" here is every variant belonging to
@@ -22,14 +25,41 @@ interface Row {
   variant: ProductVariant;
 }
 
+const stockOptions: { value: "all" | "in_stock" | "low_stock" | "out_of_stock"; label: string }[] = [
+  { value: "all", label: "All stock" },
+  { value: "in_stock", label: "In stock" },
+  { value: "low_stock", label: "Low stock" },
+  { value: "out_of_stock", label: "Out of stock" },
+];
+
 export default function InventoryPage() {
+  const [stock, setStock] = useState<"all" | "in_stock" | "low_stock" | "out_of_stock">("all");
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setSearch(searchInput.trim());
+      setPage(1);
+    }, 300);
+    return () => clearTimeout(t);
+  }, [searchInput]);
+
+  function handleStockChange(v: "all" | "in_stock" | "low_stock" | "out_of_stock") {
+    setStock(v);
+    setPage(1);
+  }
+
+  const stockQs = stock === "all" ? "" : `&stock=${stock}`;
+  const searchQs = search ? `&search=${encodeURIComponent(search)}` : "";
   const {
     data: response,
     isLoading,
     mutate,
-  } = useSWR<Paginated<Product>>(`/api/v1/seller/products?page=${page}&limit=${PRODUCTS_PER_PAGE}`, (path: string) =>
-    api.get<Paginated<Product>>(path),
+  } = useSWR<Paginated<Product>>(
+    `/api/v1/seller/products?page=${page}&limit=${PRODUCTS_PER_PAGE}${stockQs}${searchQs}`,
+    (path: string) => api.get<Paginated<Product>>(path),
   );
   const [savingId, setSavingId] = useState<string | null>(null);
 
@@ -66,6 +96,30 @@ export default function InventoryPage() {
     <div className="space-y-6">
       <PageHeader title="Inventory" description="Manage stock across every product variant." />
 
+      <div className="flex items-center gap-2">
+        <div className="relative">
+          <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="Search product, SKU…"
+            className="w-64 pl-8"
+          />
+        </div>
+        <Select value={stock} onValueChange={(v) => handleStockChange(v as typeof stock)}>
+          <SelectTrigger className="w-40">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {stockOptions.map((o) => (
+              <SelectItem key={o.value} value={o.value}>
+                {o.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
       {isLoading || !response ? (
         <div className="space-y-2">
           {Array.from({ length: 4 }).map((_, i) => (
@@ -73,7 +127,19 @@ export default function InventoryPage() {
           ))}
         </div>
       ) : rows.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No products yet.</p>
+        search || stock !== "all" ? (
+          <EmptyState
+            icon={Boxes}
+            title="No matching inventory"
+            description="Try a different search term or stock filter."
+          />
+        ) : (
+          <EmptyState
+            icon={Boxes}
+            title="No products yet"
+            description="Stock levels for every variant will show up here once you add products."
+          />
+        )
       ) : (
         <>
           <div className="overflow-x-auto rounded-md border">

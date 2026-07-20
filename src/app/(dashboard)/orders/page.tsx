@@ -1,16 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import useSWR from "swr";
 import { api } from "@/lib/api";
 import type { Order, OrderStatus, Paginated } from "@/lib/types";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { OrderStatusBadge } from "@/components/orders/status-badge";
 import { PageHeader } from "@/components/layout/page-header";
 import { PaginationControls } from "@/components/layout/pagination-controls";
+import { EmptyState } from "@/components/layout/empty-state";
+import { Search, ShoppingBag } from "lucide-react";
 
 const PAGE_SIZE = 50;
 
@@ -25,10 +28,23 @@ const statusOptions: { value: OrderStatus | "all"; label: string }[] = [
 
 export default function OrdersPage() {
   const [status, setStatus] = useState<OrderStatus | "all">("all");
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const qs = status === "all" ? "" : `&status=${status}`;
+
+  // Debounce the search box so it doesn't refetch on every keystroke.
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setSearch(searchInput.trim());
+      setPage(1);
+    }, 300);
+    return () => clearTimeout(t);
+  }, [searchInput]);
+
+  const statusQs = status === "all" ? "" : `&status=${status}`;
+  const searchQs = search ? `&search=${encodeURIComponent(search)}` : "";
   const { data: response, isLoading } = useSWR<Paginated<Order>>(
-    `/api/v1/seller/orders?page=${page}&limit=${PAGE_SIZE}${qs}`,
+    `/api/v1/seller/orders?page=${page}&limit=${PAGE_SIZE}${statusQs}${searchQs}`,
     (path: string) => api.get<Paginated<Order>>(path),
   );
 
@@ -39,24 +55,31 @@ export default function OrdersPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        title="Orders"
-        description="Track and fulfill customer orders."
-        action={
-          <Select value={status} onValueChange={(v) => handleStatusChange(v as OrderStatus | "all")}>
-            <SelectTrigger className="w-40">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {statusOptions.map((o) => (
-                <SelectItem key={o.value} value={o.value}>
-                  {o.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        }
-      />
+      <PageHeader title="Orders" description="Track and fulfill customer orders." />
+
+      <div className="flex items-center gap-2">
+        <div className="relative">
+          <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="Search order, name, email, phone…"
+            className="w-64 pl-8"
+          />
+        </div>
+        <Select value={status} onValueChange={(v) => handleStatusChange(v as OrderStatus | "all")}>
+          <SelectTrigger className="w-40">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {statusOptions.map((o) => (
+              <SelectItem key={o.value} value={o.value}>
+                {o.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
       {isLoading || !response ? (
         <div className="space-y-2">
@@ -65,7 +88,19 @@ export default function OrdersPage() {
           ))}
         </div>
       ) : response.items.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No orders yet.</p>
+        search || status !== "all" ? (
+          <EmptyState
+            icon={ShoppingBag}
+            title="No matching orders"
+            description="Try a different search term or status filter."
+          />
+        ) : (
+          <EmptyState
+            icon={ShoppingBag}
+            title="No orders yet"
+            description="Orders will show up here as soon as a customer checks out."
+          />
+        )
       ) : (
         <>
           <div className="overflow-x-auto rounded-md border">
