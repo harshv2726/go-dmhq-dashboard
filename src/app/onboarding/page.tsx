@@ -1,16 +1,18 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { useStore } from "@/lib/use-store";
 import { PlanPicker } from "@/components/billing/plan-picker";
+import { WelcomeScreen } from "@/components/billing/welcome-screen";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function OnboardingPage() {
   const { user, isLoading: authLoading, logout } = useAuth();
   const { store, isLoading: storeLoading, refresh } = useStore();
   const router = useRouter();
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) router.replace("/login");
@@ -25,9 +27,13 @@ export default function OnboardingPage() {
     );
   }
 
+  if (showWelcome) {
+    return <WelcomeScreen storeName={store.name} onDone={() => router.replace("/home")} />;
+  }
+
   async function handleSubscribed() {
     await refresh();
-    router.replace("/home");
+    setShowWelcome(true);
   }
 
   return (
