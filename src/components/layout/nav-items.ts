@@ -2,6 +2,7 @@ import {
   Bell,
   Boxes,
   ChartNoAxesColumn,
+  Code2,
   CreditCard,
   FileText,
   FolderOpen,
@@ -52,6 +53,7 @@ export const settingsSections = [
   { key: "notifications", label: "Notifications", icon: Bell },
   { key: "analytics", label: "Analytics", icon: ChartNoAxesColumn },
   { key: "billing", label: "Billing", icon: CreditCard },
+  { key: "developer", label: "Developer", icon: Code2 },
   { key: "access-requests", label: "Access Requests", icon: ShieldCheck },
 ] as const;
 

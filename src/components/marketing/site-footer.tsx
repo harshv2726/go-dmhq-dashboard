@@ -11,6 +11,7 @@ const companyLinks = [
   { href: "/about", label: "What is DMHQ" },
   { href: "/help", label: "Help Center" },
   { href: "/contact", label: "Community" },
+  { href: "/developers", label: "API Reference" },
 ];
 
 const accountLinks = [

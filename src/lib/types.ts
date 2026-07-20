@@ -81,6 +81,7 @@ export interface Store {
   plan_expires_at: string | null;
   plan_cancelled_at: string | null;
   storefront_live: boolean;
+  api_key: string;
   created_at: string;
   updated_at: string;
 }

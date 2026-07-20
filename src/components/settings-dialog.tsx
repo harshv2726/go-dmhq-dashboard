@@ -23,6 +23,7 @@ import { NotificationsSettingsForm } from "@/components/settings/notifications-s
 import { AnalyticsSettingsForm } from "@/components/settings/analytics-settings-form";
 import { AccessRequestsSettingsForm } from "@/components/settings/access-requests-settings-form";
 import { BillingSettingsForm } from "@/components/settings/billing-settings-form";
+import { DeveloperSettingsForm } from "@/components/settings/developer-settings-form";
 
 interface SettingsDialogProps {
   open: boolean;
@@ -101,6 +102,9 @@ export function SettingsDialog({
                   )}
                   {active === "billing" && (
                     <BillingSettingsForm key={`billing-${store.id}`} initial={store} onSaved={refresh} />
+                  )}
+                  {active === "developer" && (
+                    <DeveloperSettingsForm key={`developer-${store.id}`} initial={store} onSaved={refresh} />
                   )}
                   {active === "access-requests" && <AccessRequestsSettingsForm />}
                 </>
