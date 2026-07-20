@@ -79,6 +79,7 @@ export interface Store {
   ga4_measurement_id: string | null;
   plan: "" | "backend" | "full";
   plan_expires_at: string | null;
+  plan_cancelled_at: string | null;
   storefront_live: boolean;
   created_at: string;
   updated_at: string;
