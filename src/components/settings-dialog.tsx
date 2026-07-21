@@ -44,7 +44,7 @@ export function SettingsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="overflow-hidden p-0 md:max-h-[600px] md:max-w-[750px] lg:max-w-[850px]">
+      <DialogContent className="overflow-hidden p-0 md:max-h-150 md:max-w-187.5 lg:max-w-212.5">
         <DialogTitle className="sr-only">Settings</DialogTitle>
         <DialogDescription className="sr-only">Manage your store settings.</DialogDescription>
         <SidebarProvider className="items-start">
@@ -69,7 +69,7 @@ export function SettingsDialog({
               </SidebarGroup>
             </SidebarContent>
           </Sidebar>
-          <main className="flex h-[560px] flex-1 flex-col overflow-hidden">
+          <main className="flex h-140 flex-1 flex-col overflow-hidden">
             <header className="flex h-14 shrink-0 items-center border-b px-4">
               <Breadcrumb>
                 <BreadcrumbList>
