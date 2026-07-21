@@ -5,6 +5,16 @@ import type { ApiResponse, AuthResponse } from "./types";
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8081";
 const TOKEN_STORAGE_KEY = "dmhq_access_token";
 
+// Application-identity headers — required on every /api/v1/auth,
+// /api/v1/seller request (see backend's router.requireClientAuth), on top
+// of whatever user-level auth that route already needs. Not a real secret
+// in this app's hands: it's NEXT_PUBLIC_, so it's visible in the browser
+// bundle like any other client-side config here.
+const CLIENT_HEADERS: Record<string, string> = {
+  "X-DMHQ-Client-Id": process.env.NEXT_PUBLIC_CLIENT_ID ?? "",
+  "X-DMHQ-Client-Secret": process.env.NEXT_PUBLIC_CLIENT_SECRET ?? "",
+};
+
 export class ApiError extends Error {
   status: number;
   constructor(status: number, message: string) {
@@ -48,6 +58,7 @@ async function refreshSession(): Promise<AuthResponse | null> {
   try {
     const res = await fetch(`${API_URL}/api/v1/auth/refresh`, {
       method: "POST",
+      headers: CLIENT_HEADERS,
       credentials: "include",
     });
     if (!res.ok) return null;
@@ -70,7 +81,7 @@ async function request<T>(path: string, opts: RequestOptions = {}, isRetry = fal
   const { method = "GET", body, skipAuth } = opts;
   const isFormData = body instanceof FormData;
 
-  const headers: Record<string, string> = {};
+  const headers: Record<string, string> = { ...CLIENT_HEADERS };
   if (!isFormData && body !== undefined) headers["Content-Type"] = "application/json";
 
   const token = getAccessToken();
