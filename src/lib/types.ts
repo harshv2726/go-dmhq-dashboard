@@ -86,7 +86,7 @@ export interface Store {
   updated_at: string;
 }
 
-export type Plan = "backend" | "full";
+export type Plan = "full";
 
 export interface PlanInfo {
   key: Plan;
@@ -97,24 +97,24 @@ export interface PlanInfo {
   features: string[];
 }
 
-// Prices are enforced server-side (internal/billing) — this is display
-// only, kept in sync by hand.
+// DMHQ sells one plan — everything included, no tiers. Price is enforced
+// server-side (internal/billing) — this is display only, kept in sync by
+// hand.
 export const PLANS: PlanInfo[] = [
   {
-    key: "backend",
-    name: "Backend",
-    priceLabel: "₹199/mo",
-    amountPaise: 19900,
-    description: "Run your business from the dashboard — no public storefront.",
-    features: ["Seller dashboard", "Products & inventory", "Orders & customers", "WhatsApp notifications"],
-  },
-  {
     key: "full",
-    name: "Full access",
-    priceLabel: "₹499/mo",
-    amountPaise: 49900,
-    description: "Everything in Backend, plus a live storefront customers can buy from.",
-    features: ["Everything in Backend", "Public storefront at dmhq.in/you", "Checkout links & payments", "Storefront customization"],
+    name: "DMHQ",
+    priceLabel: "₹999/mo",
+    amountPaise: 99900,
+    description: "Everything included. No transaction fees. No hidden cuts on your sales.",
+    features: [
+      "Seller dashboard",
+      "Products & inventory",
+      "Orders & customers",
+      "Public storefront at dmhq.in/you",
+      "Checkout links & payments",
+      "WhatsApp notifications",
+    ],
   },
 ];
 

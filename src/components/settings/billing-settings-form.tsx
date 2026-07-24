@@ -91,17 +91,19 @@ export function BillingSettingsForm({ initial, onSaved }: BillingSettingsFormPro
         )}
       </Card>
 
-      <div>
-        <h3 className="text-sm font-semibold">{active ? "Change plan" : "Choose a plan"}</h3>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {cancelled
-            ? "Subscribing to either plan below reactivates your billing and clears the cancellation."
-            : "Switching plans starts a new payment for the new plan's price and resets your billing period."}
-        </p>
-        <div className="mt-4">
-          <PlanPicker storeName={initial.name} currentPlan={active && !cancelled ? initial.plan || undefined : undefined} onSubscribed={onSaved} />
+      {!(active && !cancelled) && (
+        <div>
+          <h3 className="text-sm font-semibold">{cancelled ? "Resubscribe" : "Subscribe"}</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {cancelled
+              ? "Subscribing again reactivates your billing and clears the cancellation."
+              : "One plan, everything included."}
+          </p>
+          <div className="mt-4">
+            <PlanPicker storeName={initial.name} onSubscribed={onSaved} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

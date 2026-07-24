@@ -41,18 +41,18 @@ export default function OnboardingPage() {
       <div className="mb-10 text-center">
         <span className="font-heading text-xl font-semibold tracking-tight">DMHQ</span>
         <h1 className="mt-4 font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-          {store.plan ? "Renew your plan" : `Choose a plan for ${store.name}`}
+          {store.plan ? "Renew your subscription" : `Activate ${store.name}`}
         </h1>
         <p className="mt-2 text-muted-foreground">
           {store.plan
-            ? "Your plan has ended — pick a plan to keep using DMHQ."
-            : "Pick a plan to activate your store. You can switch plans anytime."}
+            ? "Your subscription has ended — renew to keep using DMHQ."
+            : "One plan, everything included. Cancel anytime."}
         </p>
       </div>
 
       {/* No currentPlan passed here: landing on /onboarding always means
-          there's no *active* plan (first-time or just expired), so both
-          cards should stay selectable rather than showing whatever plan
+          there's no *active* plan (first-time or just expired), so the
+          card should stay selectable rather than showing whatever plan
           string is still sitting on the store record as "current." */}
       <PlanPicker storeName={store.name} onSubscribed={handleSubscribed} />
 

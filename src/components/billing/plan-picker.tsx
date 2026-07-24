@@ -7,7 +7,6 @@ import { api, ApiError } from "@/lib/api";
 import { PLANS, type Plan, type SubscribeResponse } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 
 // Mirrors apps/storefront's checkout Razorpay integration
 // (src/app/stores/[slug]/checkout/page.tsx) almost verbatim — same manual
@@ -40,11 +39,10 @@ function loadRazorpayScript(): Promise<void> {
 
 interface PlanPickerProps {
   storeName: string;
-  currentPlan?: "" | Plan;
   onSubscribed: () => void;
 }
 
-export function PlanPicker({ storeName, currentPlan, onSubscribed }: PlanPickerProps) {
+export function PlanPicker({ storeName, onSubscribed }: PlanPickerProps) {
   const [payingFor, setPayingFor] = useState<Plan | null>(null);
 
   async function subscribe(plan: Plan) {
@@ -71,7 +69,7 @@ export function PlanPicker({ storeName, currentPlan, onSubscribed }: PlanPickerP
       amount: payment.amount,
       currency: payment.currency,
       name: "DMHQ",
-      description: `${storeName} — ${PLANS.find((p) => p.key === plan)?.name} plan`,
+      description: `${storeName} — DMHQ subscription`,
       order_id: payment.razorpay_order_id,
       theme: { color: "#008060" },
       handler: async (response: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) => {
@@ -96,11 +94,10 @@ export function PlanPicker({ storeName, currentPlan, onSubscribed }: PlanPickerP
   }
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2">
+    <div className="mx-auto grid max-w-sm gap-6">
       {PLANS.map((plan) => {
-        const isCurrent = currentPlan === plan.key;
         return (
-          <Card key={plan.key} className={cn(isCurrent && "border-primary")}>
+          <Card key={plan.key}>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>{plan.name}</span>
@@ -119,13 +116,8 @@ export function PlanPicker({ storeName, currentPlan, onSubscribed }: PlanPickerP
               </ul>
             </CardContent>
             <CardFooter>
-              <Button
-                className="w-full"
-                variant={isCurrent ? "outline" : "default"}
-                disabled={payingFor !== null || isCurrent}
-                onClick={() => subscribe(plan.key)}
-              >
-                {isCurrent ? "Current plan" : payingFor === plan.key ? "Opening payment…" : `Subscribe for ${plan.priceLabel}`}
+              <Button className="w-full" disabled={payingFor !== null} onClick={() => subscribe(plan.key)}>
+                {payingFor === plan.key ? "Opening payment…" : `Subscribe for ${plan.priceLabel}`}
               </Button>
             </CardFooter>
           </Card>
