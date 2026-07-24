@@ -1,6 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Boxes, CreditCard, Link2, MessageCircle, Package, Plane, Share2, ShoppingBag, Ticket } from "lucide-react";
+import {
+  BarChart3,
+  Boxes,
+  CreditCard,
+  Link2,
+  MessageCircle,
+  Package,
+  PackageSearch,
+  Plane,
+  Share2,
+  ShoppingBag,
+  Sparkles,
+  Ticket,
+  Users,
+  Wand2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/reveal";
 import { HowItWorksIllustration } from "@/components/how-it-works-illustration";
@@ -67,6 +82,29 @@ const features = [
   },
 ];
 
+const aiCapabilities = [
+  {
+    icon: BarChart3,
+    title: "Analytics that talk back",
+    description: "Ask what's selling, what's slowing down, and why — in plain English, not a spreadsheet.",
+  },
+  {
+    icon: PackageSearch,
+    title: "Restock before you run out",
+    description: "Flags what's about to sell out, based on how fast it's actually moving.",
+  },
+  {
+    icon: Users,
+    title: "Know your repeat buyers",
+    description: "Surfaces who keeps coming back and who's gone quiet, so you know who to reach.",
+  },
+  {
+    icon: Wand2,
+    title: "Drafted replies, ready to send",
+    description: "Common DM questions get a suggested answer — you just approve and send.",
+  },
+];
+
 const storeTypes = [
   {
     icon: ShoppingBag,
@@ -85,21 +123,40 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative overflow-hidden">
+        <section className="relative isolate overflow-hidden">
           <div
             aria-hidden
             className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[32rem] bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,color-mix(in_oklch,var(--primary),transparent_88%),transparent)]"
           />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[32rem] opacity-60 [mask-image:radial-gradient(ellipse_60%_55%_at_50%_10%,black,transparent)]"
+            style={{
+              backgroundImage: `radial-gradient(color-mix(in oklch, var(--foreground), transparent 88%) 1px, transparent 1px)`,
+              backgroundSize: "24px 24px",
+            }}
+          />
+          <div
+            aria-hidden
+            className="animate-float pointer-events-none absolute -top-16 left-[8%] -z-10 size-72 rounded-full bg-primary/15 blur-3xl motion-reduce:hidden"
+            style={{ animationDuration: "9s" }}
+          />
+          <div
+            aria-hidden
+            className="animate-float pointer-events-none absolute top-10 right-[10%] -z-10 size-64 rounded-full bg-[color-mix(in_oklch,var(--chart-2),transparent_60%)] blur-3xl motion-reduce:hidden"
+            style={{ animationDuration: "11s", animationDelay: "1.5s" }}
+          />
           <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8">
             <h1 className="animate-fade-up text-balance font-heading text-4xl font-semibold tracking-tight motion-reduce:animate-none sm:text-5xl">
-              Your Instagram and WhatsApp are your storefront. We handle the rest.
+              Getting customers was never your problem. Losing track of them was.
             </h1>
             <p
               className="animate-fade-up max-w-2xl text-balance text-lg text-muted-foreground motion-reduce:animate-none"
               style={{ animationDelay: "100ms" }}
             >
-              DMHQ is the operations layer for Instagram sellers — orders, payments, inventory, and WhatsApp
-              notifications — so you can stay focused on content and customers, not code.
+              Every &ldquo;is this available?&rdquo;, every payment screenshot, every &ldquo;I&apos;ll pay
+              now&rdquo; — DMHQ keeps it straight. Who paid, who&apos;s next, what ships today. No spreadsheet,
+              no scrolling back through old chats.
             </p>
             <div
               className="animate-fade-up flex flex-col gap-3 motion-reduce:animate-none sm:flex-row"
@@ -122,12 +179,29 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* The problem, plainly */}
+        <section className="border-t border-border">
+          <Reveal className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
+            <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
+              You already built the shop. It&apos;s just in your DMs.
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Someone sends a screenshot. You scroll up to check if they actually paid. You reply to five
+              people and forget the sixth. Nothing&apos;s written down anywhere.
+            </p>
+            <p className="mt-4 text-muted-foreground">
+              That was never a sales problem — it&apos;s a tracking problem. Think of DMHQ as a control tower
+              for your DMs: every order lands properly, nothing crashes, and you always know who&apos;s next.
+            </p>
+          </Reveal>
+        </section>
+
         {/* How it works */}
         <section id="how-it-works" className="border-t border-border bg-muted/40">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
             <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">How it works</h2>
-              <p className="mt-2 text-muted-foreground">From DM to delivered, in three steps.</p>
+              <p className="mt-2 text-muted-foreground">Post it. Link it. Ship it.</p>
             </Reveal>
 
             {/* Illustration: a checkout link opened on a phone, with the three
@@ -216,13 +290,46 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* AI, coming soon */}
+        <section className="border-t border-border">
+          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+            <Reveal className="mx-auto max-w-2xl text-center">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
+                <Sparkles className="size-3.5" />
+                Coming soon
+              </span>
+              <h2 className="mt-4 font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
+                An AI that actually runs your store
+              </h2>
+              <p className="mt-2 text-muted-foreground">
+                We&apos;re building an assistant into DMHQ that reads your store&apos;s data so you don&apos;t have
+                to — starting with analytics, and growing from there.
+              </p>
+            </Reveal>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {aiCapabilities.map((item, i) => (
+                <Reveal key={item.title} delayMs={i * 100}>
+                  <div className="h-full rounded-xl border border-dashed border-border bg-card/50 p-6">
+                    <div className="flex size-9 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+                      <item.icon className="size-5" />
+                    </div>
+                    <h3 className="mt-4 font-heading text-base font-semibold">{item.title}</h3>
+                    <p className="mt-1.5 text-sm text-muted-foreground">{item.description}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Pricing */}
         <section id="pricing" className="border-t border-border">
           <Reveal className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
             <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Simple, honest pricing</h2>
             <p className="mt-2 text-muted-foreground">
-              Plans from <span className="font-medium text-foreground">₹199–₹499/month</span>, plus a small fee per
-              sale. No setup cost, no long-term contract.
+              <span className="font-medium text-foreground">₹199/month</span> for the dashboard, or{" "}
+              <span className="font-medium text-foreground">₹499/month</span> with a live storefront included. No
+              setup fee, no contracts — cancel anytime.
             </p>
             <Button size="lg" className="mt-6 px-6" asChild>
               <Link href="/register">Get started</Link>
@@ -231,13 +338,22 @@ export default function LandingPage() {
         </section>
 
         {/* Final CTA */}
-        <section className="border-t border-border bg-primary text-primary-foreground">
+        <section className="relative isolate overflow-hidden border-t border-border bg-primary text-primary-foreground">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 -z-10 opacity-[0.14]"
+            style={{
+              backgroundImage: `radial-gradient(var(--primary-foreground) 1.5px, transparent 1.5px)`,
+              backgroundSize: "24px 24px",
+            }}
+          />
           <Reveal className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-center sm:px-6 lg:px-8">
             <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-              Ready to turn your DMs into orders?
+              Your shop already has customers. It just needs a tower.
             </h2>
             <p className="max-w-xl text-primary-foreground/80">
-              Your followers are ready to buy. Give them a link instead of a comment thread.
+              DMHQ keeps track of who ordered, who paid, and what ships next — so nothing gets lost in the
+              DMs.
             </p>
             <Button size="lg" variant="secondary" className="mt-2 px-6" asChild>
               <Link href="/register">Start selling free</Link>
