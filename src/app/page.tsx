@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   BarChart3,
-  Boxes,
+  Check,
   CreditCard,
   LayoutGrid,
   Link2,
@@ -10,12 +10,16 @@ import {
   Package,
   PackageSearch,
   Plane,
+  Rocket,
   Share2,
   ShoppingBag,
   Sparkles,
+  Store,
   Ticket,
+  TrendingUp,
   Users,
   Wand2,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/reveal";
@@ -34,7 +38,7 @@ const steps = [
     number: "1",
     icon: Package,
     title: "Add a product",
-    description: "List what you're selling and DMHQ generates a checkout link for it — no website to build.",
+    description: "List what you're selling and DMHQ gives you a ready-made storefront and checkout link for it. Customize it, don't build it.",
   },
   {
     number: "2",
@@ -52,9 +56,9 @@ const steps = [
 
 const features = [
   {
-    icon: LayoutGrid,
-    title: "Seller dashboard",
-    description: "Orders, products, and revenue — all in one place, built for your phone, not a laptop you'll never open.",
+    icon: Store,
+    title: "Your storefront",
+    description: "Already built. Customize the name, photos, and palette — no design decisions, no blank canvas.",
   },
   {
     icon: Link2,
@@ -67,11 +71,6 @@ const features = [
     description: "Card, UPI, and wallet checkout that works on the first try — no payment gateway to wire up.",
   },
   {
-    icon: Boxes,
-    title: "Inventory tracking",
-    description: "Stock updates automatically as orders come in, so you stop counting by hand.",
-  },
-  {
     icon: MessageCircle,
     title: "WhatsApp notifications",
     description: "Customers get order and shipping updates on WhatsApp, out of the box.",
@@ -80,6 +79,38 @@ const features = [
     icon: Package,
     title: "Order management",
     description: "Every order tracked from placed to shipped — so you're never scrolling back through DMs to remember what happened.",
+  },
+  {
+    icon: LayoutGrid,
+    title: "Seller dashboard",
+    description: "Orders, products, and revenue — all in one place, built for your phone.",
+  },
+];
+
+const beforeList = [
+  "“Is this available?” — five times, unanswered",
+  "A payment screenshot with no name attached",
+  "“Order confirm hua?” sent two hours ago, still unread",
+  "Half a notebook page, and you can't read your own handwriting anymore",
+];
+
+const afterList = [
+  "Every order in one list — name, product, paid or not",
+  "WhatsApp sends “Order confirmed” automatically",
+  "One dashboard, not six open chats",
+  "Nothing forgotten, nothing re-explained",
+];
+
+const whoItsFor = [
+  {
+    icon: Rocket,
+    title: "Just starting out?",
+    description: "Get your first product live in minutes, no learning curve.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Already have an audience?",
+    description: "Stop losing orders in the chaos of a busy inbox.",
   },
 ];
 
@@ -174,27 +205,52 @@ export default function LandingPage() {
               className="animate-fade-up text-sm text-muted-foreground motion-reduce:animate-none"
               style={{ animationDelay: "300ms" }}
             >
-              No website. No code. Store live at <span className="font-medium text-foreground">dmhq.in/you</span> in
-              under 2 minutes.
+              Your storefront&apos;s ready in under 2 minutes at{" "}
+              <span className="font-medium text-foreground">dmhq.in/you</span> — just customize and go.
             </p>
           </div>
         </section>
 
-        {/* The problem, plainly */}
+        {/* Before / After */}
         <section className="border-t border-border">
-          <Reveal className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
-            <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-              You already built the shop. It&apos;s just in your DMs.
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              Someone sends a screenshot. You scroll up to check if they actually paid. You reply to five
-              people and forget the sixth. Nothing&apos;s written down anywhere.
-            </p>
-            <p className="mt-4 text-muted-foreground">
-              That was never a sales problem — it&apos;s a tracking problem. Think of DMHQ as a control tower
-              for your DMs: every order lands properly, nothing crashes, and you always know who&apos;s next.
-            </p>
-          </Reveal>
+          <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+            <Reveal className="mx-auto max-w-2xl text-center">
+              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Sound familiar?</h2>
+            </Reveal>
+            <div className="mt-10 grid gap-6 sm:grid-cols-2">
+              <Reveal>
+                <div className="h-full rounded-xl border border-border bg-card p-6">
+                  <h3 className="font-heading text-sm font-semibold text-muted-foreground">
+                    Your DMs right now
+                  </h3>
+                  <ul className="mt-4 space-y-3">
+                    {beforeList.map((item) => (
+                      <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                        <X className="mt-0.5 size-4 shrink-0 text-destructive" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+              <Reveal delayMs={100}>
+                <div className="h-full rounded-xl border border-primary/30 bg-card p-6">
+                  <h3 className="font-heading text-sm font-semibold text-primary">Your DMs with DMHQ</h3>
+                  <ul className="mt-4 space-y-3">
+                    {afterList.map((item) => (
+                      <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                        <Check className="mt-0.5 size-4 shrink-0 text-primary" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            </div>
+            <Reveal delayMs={150} className="mt-8 text-center text-sm text-muted-foreground">
+              Same DMs. Same customers. Just nothing falls through anymore.
+            </Reveal>
+          </div>
         </section>
 
         {/* How it works */}
@@ -233,8 +289,63 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Built for how you sell */}
+        <section className="border-t border-border bg-muted/40">
+          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+            <Reveal className="mx-auto max-w-2xl text-center">
+              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Built for how you sell</h2>
+              <p className="mt-2 text-muted-foreground">
+                Whatever you&apos;re selling in your DMs, DMHQ already gets it.
+              </p>
+            </Reveal>
+            <div className="mt-12 grid gap-6 sm:grid-cols-3">
+              {storeTypes.map((type, i) => (
+                <Reveal key={type.name} delayMs={i * 100}>
+                  <div className="h-full rounded-xl border border-border bg-card p-6 text-center transition-transform duration-200 hover:-translate-y-1 hover:shadow-md">
+                    <div
+                      className="mx-auto flex size-12 items-center justify-center rounded-lg"
+                      style={{
+                        backgroundColor: `color-mix(in oklch, var(${type.colorVar}), transparent 85%)`,
+                        color: `var(${type.colorVar})`,
+                      }}
+                    >
+                      <type.icon className="size-6" />
+                    </div>
+                    <h3 className="mt-4 font-heading text-base font-semibold">{type.name}</h3>
+                    <p className="mt-1.5 text-sm text-muted-foreground">{type.description}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Who it's for */}
+        <section className="border-t border-border">
+          <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+            <Reveal className="mx-auto max-w-2xl text-center">
+              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
+                Whether you&apos;re just getting started, or you&apos;ve outgrown your notes app
+              </h2>
+            </Reveal>
+            <div className="mt-10 grid gap-6 sm:grid-cols-2">
+              {whoItsFor.map((item, i) => (
+                <Reveal key={item.title} delayMs={i * 100}>
+                  <div className="h-full rounded-xl border border-border bg-card p-6">
+                    <div className="flex size-9 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+                      <item.icon className="size-5" />
+                    </div>
+                    <h3 className="mt-4 font-heading text-base font-semibold">{item.title}</h3>
+                    <p className="mt-1.5 text-sm text-muted-foreground">{item.description}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Features */}
-        <section id="features" className="border-t border-border">
+        <section id="features" className="border-t border-border bg-muted/40">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
             <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -260,37 +371,6 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Store types */}
-        <section className="border-t border-border bg-muted/40">
-          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-            <Reveal className="mx-auto max-w-2xl text-center">
-              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Built for how you sell</h2>
-              <p className="mt-2 text-muted-foreground">
-                Whatever you&apos;re selling on social, there&apos;s a store type for it.
-              </p>
-            </Reveal>
-            <div className="mt-12 grid gap-6 sm:grid-cols-3">
-              {storeTypes.map((type, i) => (
-                <Reveal key={type.name} delayMs={i * 100}>
-                  <div className="h-full rounded-xl border border-border bg-card p-6 text-center transition-transform duration-200 hover:-translate-y-1 hover:shadow-md">
-                    <div
-                      className="mx-auto flex size-12 items-center justify-center rounded-lg"
-                      style={{
-                        backgroundColor: `color-mix(in oklch, var(${type.colorVar}), transparent 85%)`,
-                        color: `var(${type.colorVar})`,
-                      }}
-                    >
-                      <type.icon className="size-6" />
-                    </div>
-                    <h3 className="mt-4 font-heading text-base font-semibold">{type.name}</h3>
-                    <p className="mt-1.5 text-sm text-muted-foreground">{type.description}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* AI, coming soon */}
         <section className="border-t border-border">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
@@ -300,11 +380,12 @@ export default function LandingPage() {
                 Coming soon
               </span>
               <h2 className="mt-4 font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-                An AI that actually runs your store
+                Ask DMHQ. It answers.
               </h2>
               <p className="mt-2 text-muted-foreground">
-                We&apos;re building an assistant into DMHQ that reads your store&apos;s data so you don&apos;t have
-                to — starting with analytics, and growing from there.
+                No dashboards to dig through. Ask &ldquo;how did I do this week?&rdquo; and get a report. Type a
+                product description and DMHQ adds it for you. Ask &ldquo;what&apos;s low on stock?&rdquo; and get
+                an answer — instantly, in plain language.
               </p>
             </Reveal>
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -325,17 +406,34 @@ export default function LandingPage() {
 
         {/* Pricing */}
         <section id="pricing" className="border-t border-border">
-          <Reveal className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
-            <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Simple, honest pricing</h2>
-            <p className="mt-2 text-muted-foreground">
-              <span className="font-medium text-foreground">₹199/month</span> for the dashboard, or{" "}
-              <span className="font-medium text-foreground">₹499/month</span> with a live storefront included. No
-              setup fee, no contracts — cancel anytime.
-            </p>
-            <Button size="lg" className="mt-6 px-6" asChild>
-              <Link href="/register">Get started</Link>
-            </Button>
-          </Reveal>
+          <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
+            <Reveal>
+              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
+                One plan. Whoever you are.
+              </h2>
+              <div className="mx-auto mt-4 max-w-xl space-y-2 text-muted-foreground">
+                <p>Just starting out? Get your first product live in minutes, no learning curve.</p>
+                <p>Already have an audience? Stop losing orders in the chaos of a busy inbox.</p>
+              </div>
+            </Reveal>
+            <Reveal delayMs={100} className="mx-auto mt-10 max-w-sm">
+              <div className="rounded-xl border border-border bg-card p-8">
+                <div className="font-heading text-4xl font-semibold tracking-tight">
+                  ₹999<span className="text-lg font-normal text-muted-foreground">/month</span>
+                </div>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Everything included — storefront, checkout, payments, notifications. No transaction fees. No
+                  hidden cuts on your sales.
+                </p>
+                <Button size="lg" className="mt-6 w-full" asChild>
+                  <Link href="/register">Start selling free</Link>
+                </Button>
+                <p className="mt-4 text-xs text-muted-foreground">
+                  No commission as you grow. Sell ₹10,000 or ₹10,00,000 a month — the price doesn&apos;t change.
+                </p>
+              </div>
+            </Reveal>
+          </div>
         </section>
 
         {/* Final CTA */}
@@ -350,7 +448,7 @@ export default function LandingPage() {
           />
           <Reveal className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-center sm:px-6 lg:px-8">
             <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-              Your shop already has customers. It just needs a tower.
+              Your shop already has customers. It just needed someone keeping track.
             </h2>
             <p className="max-w-xl text-primary-foreground/80">
               DMHQ keeps track of who ordered, who paid, and what ships next — so nothing gets lost in the
