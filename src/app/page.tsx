@@ -28,9 +28,9 @@ import { MarketingHeader } from "@/components/marketing/site-header";
 import { MarketingFooter } from "@/components/marketing/site-footer";
 
 export const metadata: Metadata = {
-  title: "DMHQ — Your Instagram and WhatsApp are your storefront",
+  title: "DMHQ — Seller operations platform for Instagram and WhatsApp sellers",
   description:
-    "Turn Instagram DMs into real orders. Add a product, share the checkout link, get paid — no website, no code, store live in under 2 minutes.",
+    "DMHQ is the seller operations platform for Instagram and WhatsApp sellers — orders, payments, and a ready-made storefront, so nothing gets lost in the DMs.",
 };
 
 const steps = [
@@ -58,7 +58,8 @@ const features = [
   {
     icon: Store,
     title: "Your storefront",
-    description: "Already built. Customize the name, photos, and palette — no design decisions, no blank canvas.",
+    description:
+      "Ready-made and search-friendly — so when someone Googles what you sell, they find you, not a competitor. Customize the name, photos, and palette. No design decisions, no blank canvas.",
   },
   {
     icon: Link2,

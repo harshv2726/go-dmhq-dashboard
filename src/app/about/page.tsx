@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/reveal";
 import { MarketingHeader } from "@/components/marketing/site-header";
@@ -9,17 +8,8 @@ import { MarketingFooter } from "@/components/marketing/site-footer";
 export const metadata: Metadata = {
   title: "What is DMHQ?",
   description:
-    "DMHQ is the operations layer for Instagram and WhatsApp sellers — orders, payments, inventory, and shipping, so you can stay focused on content and customers.",
+    "DMHQ is the seller operations platform for Instagram and WhatsApp sellers — orders, payments, and a ready-made storefront, so nothing gets lost in the DMs.",
 };
-
-const matters = [
-  "Onboarding in under 2 minutes",
-  "Store live with zero technical knowledge",
-  "WhatsApp order notifications out of the box",
-  "A payment link that works on the first try",
-];
-
-const doesntMatter = ["Fancy theme customization", "A complex, cluttered dashboard", "Feature bloat you'll never use"];
 
 export default function AboutPage() {
   return (
@@ -35,33 +25,50 @@ export default function AboutPage() {
           />
           <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 py-20 text-center sm:px-6 sm:py-24 lg:px-8">
             <h1 className="animate-fade-up text-balance font-heading text-4xl font-semibold tracking-tight motion-reduce:animate-none sm:text-5xl">
-              What is DMHQ?
+              We didn&apos;t build another storefront. We built the front desk.
             </h1>
             <p
               className="animate-fade-up max-w-2xl text-balance text-lg text-muted-foreground motion-reduce:animate-none"
               style={{ animationDelay: "100ms" }}
             >
-              A social commerce operating system for sellers who run their business through Instagram and WhatsApp —
-              not a website builder, and not a full e-commerce platform.
+              DMHQ is the seller operations platform for Instagram and WhatsApp sellers — orders, payments, and a
+              ready-made storefront, so nothing gets lost in the DMs.
             </p>
           </div>
         </section>
 
-        {/* The problem */}
+        {/* Intro */}
+        <section className="border-t border-border">
+          <Reveal className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
+            <p className="text-muted-foreground">
+              Every day, thousands of sellers across India run real businesses out of Instagram and WhatsApp. No
+              shop board, no storefront to design, no &ldquo;Add to Cart&rdquo; button they had to build — just a
+              DM that says &ldquo;is this available?&rdquo; and a seller who makes it happen.
+            </p>
+            <p className="mt-4 text-muted-foreground">
+              That&apos;s not a small business. That&apos;s a business that already works. The audience is there.
+              The trust is there. The sales happen, one message at a time.
+            </p>
+            <p className="mt-4 font-medium text-foreground">
+              What&apos;s missing isn&apos;t a store. It&apos;s what happens <em>after</em> someone says yes.
+            </p>
+          </Reveal>
+        </section>
+
+        {/* The problem we saw */}
         <section className="border-t border-border bg-muted/40">
           <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
             <Reveal>
-              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-                Most social sellers run their business by hand
-              </h2>
+              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">The problem we saw</h2>
               <p className="mt-4 text-muted-foreground">
-                Orders come in through DMs. Payment is a UPI screenshot you have to squint at and cross-check.
-                Inventory lives in your head, or a notes app, until it doesn&apos;t. It works, until you have more
-                than a handful of orders a day — then it&apos;s just chaos with good intentions.
+                Ask any Instagram seller how they run their business, and you&apos;ll hear some version of the same
+                thing: screenshots for payment proof, scrolling up to check who actually paid, a notebook somewhere
+                with half the orders written down, and at least one customer who got missed because five others
+                messaged at the same time.
               </p>
               <p className="mt-4 text-muted-foreground">
-                DMHQ replaces that with a lightweight commerce system that needs no website: add a product, get a
-                checkout link, share it wherever your customers already are.
+                It&apos;s not disorganization. It&apos;s a shop with no one at the front desk — every seller is the
+                owner, the salesperson, and the record-keeper, all at once, all in the same chat.
               </p>
             </Reveal>
           </div>
@@ -72,12 +79,17 @@ export default function AboutPage() {
           <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
             <Reveal>
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-                The operations layer behind your Instagram
+                What DMHQ actually is
               </h2>
+              <p className="mt-4 text-muted-foreground">DMHQ is the front desk your shop never had.</p>
               <p className="mt-4 text-muted-foreground">
-                Instagram is where you find customers. DMHQ is where you run the business — orders, payments,
-                inventory, and WhatsApp notifications — so you can stay focused on content and customers instead of
-                admin.
+                You get a ready-made storefront — you don&apos;t build it, you customize it. Add your products,
+                pick your colors, and you&apos;re live at your own link in minutes. It isn&apos;t there for
+                browsing so much as so Google can find you: customers who search for what you sell should land on
+                a real page, not a dead end. Share it wherever your customers already are — Instagram, WhatsApp,
+                wherever the conversation is happening. When someone buys, the order is created automatically, and
+                you get notified on WhatsApp. No design decisions. No blank canvas. Just your existing shop,
+                finally with someone keeping track.
               </p>
             </Reveal>
             <Reveal
@@ -85,46 +97,74 @@ export default function AboutPage() {
               className="mt-8 rounded-xl border border-border bg-card px-6 py-8 text-center sm:px-10"
             >
               <p className="font-heading text-xl font-semibold tracking-tight sm:text-2xl">
-                &ldquo;Instagram is where you find customers. DMHQ is where you run the business.&rdquo;
+                &ldquo;A waiter who never forgets an order. A traffic cop for your DMs, making sure orders move one
+                at a time instead of colliding into chaos.&rdquo;
+              </p>
+            </Reveal>
+            <Reveal delayMs={150} className="mt-8 text-center font-medium text-foreground">
+              You already built the shop. We just make sure nothing falls through the cracks.
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Why we didn't build another Shopify */}
+        <section className="border-t border-border bg-muted/40">
+          <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+            <Reveal>
+              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
+                Why we didn&apos;t build &ldquo;another Shopify&rdquo;
+              </h2>
+              <p className="mt-4 text-muted-foreground">
+                We looked closely at the tools already out there — and most of them ask sellers to do the same
+                thing: design a store, learn a new dashboard, move your audience somewhere new.
+              </p>
+              <p className="mt-4 text-muted-foreground">
+                But sellers don&apos;t need a new storefront. They need one that&apos;s already built, and someone
+                at the front desk keeping things in order. So we kept DMHQ deliberately simple — one flat plan,
+                zero commission on your sales, no unnecessary settings to configure. Just enough to keep orders
+                moving, and nothing to slow you down.
               </p>
             </Reveal>
           </div>
         </section>
 
-        {/* What we believe */}
+        {/* One plan */}
+        <section className="border-t border-border">
+          <Reveal className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
+            <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
+              One plan. Whoever you are.
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Just starting out? Get your first product live in minutes, no learning curve. Already have an
+              audience? Stop losing orders in the chaos of a busy inbox. DMHQ works the same way at ten orders a
+              week or ten thousand —{" "}
+              <Link href="/#pricing" className="text-foreground underline underline-offset-2">
+                the price doesn&apos;t change
+              </Link>
+              , and neither does the simplicity.
+            </p>
+          </Reveal>
+        </section>
+
+        {/* Why we're building this */}
         <section className="border-t border-border bg-muted/40">
-          <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-            <Reveal className="mx-auto max-w-2xl text-center">
-              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">What we believe</h2>
-              <p className="mt-2 text-muted-foreground">
-                Our moat is speed of setup, not depth of features — so we&apos;re deliberate about what&apos;s in
-                scope.
+          <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+            <Reveal>
+              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
+                Why we&apos;re building this
+              </h2>
+              <p className="mt-4 text-muted-foreground">
+                Most e-commerce tools were built for people opening a business for the first time — a blank
+                canvas, a theme to pick, a brand to build from scratch. But that&apos;s not who most sellers on
+                Instagram and WhatsApp are. They already have the business. They already have customers who trust
+                them. What they never had was the boring, unglamorous infrastructure underneath — the receipt, the
+                record, the &ldquo;who paid, what ships next.&rdquo;
+              </p>
+              <p className="mt-4 text-muted-foreground">
+                DMHQ exists to be that infrastructure. Quietly. Without asking sellers to become something
+                they&apos;re not.
               </p>
             </Reveal>
-            <div className="mt-12 grid gap-6 sm:grid-cols-2">
-              <Reveal className="rounded-xl border border-border bg-card p-6">
-                <h3 className="font-heading text-base font-semibold">What matters</h3>
-                <ul className="mt-4 space-y-3">
-                  {matters.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-sm">
-                      <Check className="mt-0.5 size-4 shrink-0 text-primary" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-              <Reveal delayMs={100} className="rounded-xl border border-border bg-card p-6">
-                <h3 className="font-heading text-base font-semibold">What doesn&apos;t</h3>
-                <ul className="mt-4 space-y-3">
-                  {doesntMatter.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                      <X className="mt-0.5 size-4 shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            </div>
           </div>
         </section>
 
@@ -132,10 +172,10 @@ export default function AboutPage() {
         <section className="border-t border-border bg-primary text-primary-foreground">
           <Reveal className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-center sm:px-6 lg:px-8">
             <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-              Tap, buy, done — see it for yourself
+              Post it. Link it. Ship it.
             </h2>
             <p className="max-w-xl text-primary-foreground/80">
-              Set up a checkout link in under two minutes. No credit card, no code.
+              That&apos;s the whole idea. You already have customers walking in. We just gave them a front desk.
             </p>
             <Button size="lg" variant="secondary" className="mt-2 px-6" asChild>
               <Link href="/register">Start selling free</Link>
