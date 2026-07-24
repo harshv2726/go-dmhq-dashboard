@@ -4,6 +4,7 @@ import {
   BarChart3,
   Boxes,
   CreditCard,
+  LayoutGrid,
   Link2,
   MessageCircle,
   Package,
@@ -51,14 +52,14 @@ const steps = [
 
 const features = [
   {
-    icon: ShoppingBag,
+    icon: LayoutGrid,
     title: "Seller dashboard",
-    description: "Orders, products, and revenue in one place — built for a phone screen, not a boardroom.",
+    description: "Orders, products, and revenue — all in one place, built for your phone, not a laptop you'll never open.",
   },
   {
     icon: Link2,
     title: "Checkout links",
-    description: "Every product gets its own shareable link. No storefront setup, no theme to configure.",
+    description: "One link per product. Drop it in a story, a bio, or straight into the DM that asked for it.",
   },
   {
     icon: CreditCard,
@@ -78,7 +79,7 @@ const features = [
   {
     icon: Package,
     title: "Order management",
-    description: "Every order tracked from placed to shipped, with status your customer can see too.",
+    description: "Every order tracked from placed to shipped — so you're never scrolling back through DMs to remember what happened.",
   },
 ];
 
@@ -148,15 +149,15 @@ export default function LandingPage() {
           />
           <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8">
             <h1 className="animate-fade-up text-balance font-heading text-4xl font-semibold tracking-tight motion-reduce:animate-none sm:text-5xl">
-              Getting customers was never your problem. Losing track of them was.
+              You didn&apos;t lose the customer. You lost the message.
             </h1>
             <p
               className="animate-fade-up max-w-2xl text-balance text-lg text-muted-foreground motion-reduce:animate-none"
               style={{ animationDelay: "100ms" }}
             >
               Every &ldquo;is this available?&rdquo;, every payment screenshot, every &ldquo;I&apos;ll pay
-              now&rdquo; — DMHQ keeps it straight. Who paid, who&apos;s next, what ships today. No spreadsheet,
-              no scrolling back through old chats.
+              now&rdquo; — DMHQ keeps it all in order: who paid, who&apos;s next, what ships today. No
+              spreadsheet, no scrolling through old chats.
             </p>
             <div
               className="animate-fade-up flex flex-col gap-3 motion-reduce:animate-none sm:flex-row"
