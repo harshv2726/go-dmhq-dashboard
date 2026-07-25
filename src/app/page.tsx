@@ -218,9 +218,15 @@ export default function LandingPage() {
             <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Sound familiar?</h2>
             </Reveal>
-            <div className="mt-10 grid gap-6 sm:grid-cols-2">
+            <div className="relative mt-10 grid gap-6 sm:grid-cols-2">
+              <div
+                aria-hidden
+                className="absolute top-1/2 left-1/2 z-10 hidden size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background font-heading text-xs font-semibold text-muted-foreground shadow-sm sm:flex"
+              >
+                VS
+              </div>
               <Reveal>
-                <div className="h-full rounded-xl border border-border bg-card p-6">
+                <div className="h-full rounded-xl border border-destructive/20 bg-destructive/[0.03] p-6">
                   <h3 className="font-heading text-sm font-semibold text-muted-foreground">
                     Your DMs right now
                   </h3>
@@ -235,7 +241,7 @@ export default function LandingPage() {
                 </div>
               </Reveal>
               <Reveal delayMs={100}>
-                <div className="h-full rounded-xl border border-primary/30 bg-card p-6">
+                <div className="h-full rounded-xl border border-primary/25 bg-primary/[0.04] p-6">
                   <h3 className="font-heading text-sm font-semibold text-primary">Your DMs with DMHQ</h3>
                   <ul className="mt-4 space-y-3">
                     {afterList.map((item) => (
@@ -299,22 +305,20 @@ export default function LandingPage() {
                 Whatever you&apos;re selling in your DMs, DMHQ already gets it.
               </p>
             </Reveal>
-            <div className="mt-12 grid gap-6 sm:grid-cols-3">
+            <div className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-3">
               {storeTypes.map((type, i) => (
-                <Reveal key={type.name} delayMs={i * 100}>
-                  <div className="h-full rounded-xl border border-border bg-card p-6 text-center transition-transform duration-200 hover:-translate-y-1 hover:shadow-md">
-                    <div
-                      className="mx-auto flex size-12 items-center justify-center rounded-lg"
-                      style={{
-                        backgroundColor: `color-mix(in oklch, var(${type.colorVar}), transparent 85%)`,
-                        color: `var(${type.colorVar})`,
-                      }}
-                    >
-                      <type.icon className="size-6" />
-                    </div>
-                    <h3 className="mt-4 font-heading text-base font-semibold">{type.name}</h3>
-                    <p className="mt-1.5 text-sm text-muted-foreground">{type.description}</p>
+                <Reveal key={type.name} delayMs={i * 100} className="flex flex-col items-center text-center">
+                  <div
+                    className="flex size-16 items-center justify-center rounded-2xl"
+                    style={{
+                      backgroundColor: `color-mix(in oklch, var(${type.colorVar}), transparent 85%)`,
+                      color: `var(${type.colorVar})`,
+                    }}
+                  >
+                    <type.icon className="size-7" />
                   </div>
+                  <h3 className="mt-5 font-heading text-base font-semibold">{type.name}</h3>
+                  <p className="mt-1.5 max-w-48 text-sm text-muted-foreground">{type.description}</p>
                 </Reveal>
               ))}
             </div>
@@ -323,22 +327,22 @@ export default function LandingPage() {
 
         {/* Who it's for */}
         <section className="border-t border-border">
-          <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+          <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
             <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
                 Whether you&apos;re just getting started, or you&apos;ve outgrown your notes app
               </h2>
             </Reveal>
-            <div className="mt-10 grid gap-6 sm:grid-cols-2">
+            <div className="mt-12 grid overflow-hidden rounded-2xl border border-border sm:grid-cols-2">
               {whoItsFor.map((item, i) => (
-                <Reveal key={item.title} delayMs={i * 100}>
-                  <div className="h-full rounded-xl border border-border bg-card p-6">
-                    <div className="flex size-9 items-center justify-center rounded-lg bg-accent text-accent-foreground">
-                      <item.icon className="size-5" />
-                    </div>
-                    <h3 className="mt-4 font-heading text-base font-semibold">{item.title}</h3>
-                    <p className="mt-1.5 text-sm text-muted-foreground">{item.description}</p>
-                  </div>
+                <Reveal
+                  key={item.title}
+                  delayMs={i * 100}
+                  className={`p-8 sm:p-10 ${i === 0 ? "border-b border-border sm:border-r sm:border-b-0" : ""}`}
+                >
+                  <item.icon className="size-8 text-primary" strokeWidth={1.5} />
+                  <h3 className="mt-5 font-heading text-xl font-semibold tracking-tight">{item.title}</h3>
+                  <p className="mt-2 text-muted-foreground">{item.description}</p>
                 </Reveal>
               ))}
             </div>
@@ -356,18 +360,53 @@ export default function LandingPage() {
                 A thin, focused toolkit — not a bloated e-commerce platform you&apos;ll never fully use.
               </p>
             </Reveal>
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {features.map((feature, i) => (
-                <Reveal key={feature.title} delayMs={(i % 3) * 100}>
-                  <div className="h-full rounded-xl border border-border bg-card p-6 transition-transform duration-200 hover:-translate-y-1 hover:shadow-md">
-                    <div className="flex size-9 items-center justify-center rounded-lg bg-accent text-accent-foreground">
-                      <feature.icon className="size-5" />
+            <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-6">
+              {features.map((feature, i) => {
+                const isFlagship = i === 0;
+                return (
+                  <Reveal
+                    key={feature.title}
+                    delayMs={(i % 3) * 100}
+                    className={
+                      isFlagship
+                        ? "sm:col-span-3 sm:row-span-2"
+                        : i === 1 || i === 2
+                          ? "sm:col-span-3"
+                          : "sm:col-span-2"
+                    }
+                  >
+                    <div
+                      className={`relative h-full overflow-hidden rounded-xl border border-border bg-card transition-transform duration-200 hover:-translate-y-1 hover:shadow-md ${
+                        isFlagship ? "flex flex-col justify-end p-8" : "p-6"
+                      }`}
+                    >
+                      {isFlagship && (
+                        <div
+                          aria-hidden
+                          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06]"
+                          style={{
+                            backgroundImage: `radial-gradient(var(--foreground) 1px, transparent 1px)`,
+                            backgroundSize: "18px 18px",
+                          }}
+                        />
+                      )}
+                      <div
+                        className={`flex items-center justify-center rounded-lg bg-accent text-accent-foreground ${isFlagship ? "size-12" : "size-9"}`}
+                      >
+                        <feature.icon className={isFlagship ? "size-6" : "size-5"} />
+                      </div>
+                      <h3
+                        className={`mt-4 font-heading font-semibold ${isFlagship ? "text-xl" : "text-base"}`}
+                      >
+                        {feature.title}
+                      </h3>
+                      <p className={`mt-1.5 text-muted-foreground ${isFlagship ? "" : "text-sm"}`}>
+                        {feature.description}
+                      </p>
                     </div>
-                    <h3 className="mt-4 font-heading text-base font-semibold">{feature.title}</h3>
-                    <p className="mt-1.5 text-sm text-muted-foreground">{feature.description}</p>
-                  </div>
-                </Reveal>
-              ))}
+                  </Reveal>
+                );
+              })}
             </div>
           </div>
         </section>
