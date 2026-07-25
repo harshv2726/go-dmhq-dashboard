@@ -159,11 +159,11 @@ export default function LandingPage() {
         <section className="relative isolate overflow-hidden">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[32rem] bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,color-mix(in_oklch,var(--primary),transparent_88%),transparent)]"
+            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[28rem] bg-[radial-gradient(ellipse_55%_50%_at_50%_0%,color-mix(in_oklch,var(--primary),transparent_86%),transparent)]"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[32rem] opacity-60 [mask-image:radial-gradient(ellipse_60%_55%_at_50%_10%,black,transparent)]"
+            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[28rem] opacity-50 [mask-image:radial-gradient(ellipse_55%_50%_at_50%_5%,black,transparent)]"
             style={{
               backgroundImage: `radial-gradient(color-mix(in oklch, var(--foreground), transparent 88%) 1px, transparent 1px)`,
               backgroundSize: "24px 24px",
@@ -171,15 +171,10 @@ export default function LandingPage() {
           />
           <div
             aria-hidden
-            className="animate-float pointer-events-none absolute -top-16 left-[8%] -z-10 size-72 rounded-full bg-primary/15 blur-3xl motion-reduce:hidden"
-            style={{ animationDuration: "9s" }}
+            className="animate-float pointer-events-none absolute -top-24 left-1/2 -z-10 size-96 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl motion-reduce:hidden"
+            style={{ animationDuration: "10s" }}
           />
-          <div
-            aria-hidden
-            className="animate-float pointer-events-none absolute top-10 right-[10%] -z-10 size-64 rounded-full bg-[color-mix(in_oklch,var(--chart-2),transparent_60%)] blur-3xl motion-reduce:hidden"
-            style={{ animationDuration: "11s", animationDelay: "1.5s" }}
-          />
-          <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8">
+          <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-20 text-center sm:px-6 sm:py-24 lg:px-8">
             <h1 className="animate-fade-up text-balance font-heading text-4xl font-semibold tracking-tight motion-reduce:animate-none sm:text-5xl">
               You didn&apos;t lose the customer. You lost the message.
             </h1>
