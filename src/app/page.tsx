@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  ArrowDown,
   BarChart3,
   Check,
   CreditCard,
@@ -26,6 +27,7 @@ import { Reveal } from "@/components/reveal";
 import { HowItWorksIllustration } from "@/components/how-it-works-illustration";
 import { MarketingHeader } from "@/components/marketing/site-header";
 import { MarketingFooter } from "@/components/marketing/site-footer";
+import { PLANS } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "DMHQ — Seller operations platform for Instagram and WhatsApp sellers",
@@ -151,19 +153,19 @@ const storeTypes = [
 
 export default function LandingPage() {
   return (
-    <div className="flex min-h-svh flex-col">
+    <div className="marketing-light flex min-h-svh flex-col bg-background text-foreground">
       <MarketingHeader />
 
       <main className="flex-1">
-        {/* Hero */}
-        <section className="relative isolate overflow-hidden">
+        {/* Hero — fills the viewport below the header */}
+        <section className="relative isolate flex min-h-[calc(100svh-4rem)] items-center overflow-hidden">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[28rem] bg-[radial-gradient(ellipse_55%_50%_at_50%_0%,color-mix(in_oklch,var(--primary),transparent_86%),transparent)]"
+            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_65%_55%_at_50%_38%,color-mix(in_oklch,var(--primary),transparent_85%),transparent)]"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[28rem] opacity-50 [mask-image:radial-gradient(ellipse_55%_50%_at_50%_5%,black,transparent)]"
+            className="pointer-events-none absolute inset-0 -z-10 opacity-50 [mask-image:radial-gradient(ellipse_60%_55%_at_50%_38%,black,transparent)]"
             style={{
               backgroundImage: `radial-gradient(color-mix(in oklch, var(--foreground), transparent 88%) 1px, transparent 1px)`,
               backgroundSize: "24px 24px",
@@ -171,16 +173,23 @@ export default function LandingPage() {
           />
           <div
             aria-hidden
-            className="animate-float pointer-events-none absolute -top-24 left-1/2 -z-10 size-96 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl motion-reduce:hidden"
+            className="animate-float pointer-events-none absolute top-1/3 left-1/2 -z-10 size-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl motion-reduce:hidden"
             style={{ animationDuration: "10s" }}
           />
-          <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-20 text-center sm:px-6 sm:py-24 lg:px-8">
-            <h1 className="animate-fade-up text-balance font-heading text-4xl font-semibold tracking-tight motion-reduce:animate-none sm:text-5xl">
+
+          <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-4 py-20 text-center sm:px-6 lg:px-8">
+            <span className="animate-fade-up text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase motion-reduce:animate-none">
+              Seller operations platform
+            </span>
+            <h1
+              className="animate-fade-up text-balance font-heading text-5xl font-semibold tracking-tight motion-reduce:animate-none sm:text-6xl lg:text-7xl"
+              style={{ animationDelay: "60ms" }}
+            >
               You didn&apos;t lose the customer. You lost the message.
             </h1>
             <p
               className="animate-fade-up max-w-2xl text-balance text-lg text-muted-foreground motion-reduce:animate-none"
-              style={{ animationDelay: "100ms" }}
+              style={{ animationDelay: "160ms" }}
             >
               Every &ldquo;is this available?&rdquo;, every payment screenshot, every &ldquo;I&apos;ll pay
               now&rdquo; — DMHQ keeps it all in order: who paid, who&apos;s next, what ships today. No
@@ -188,7 +197,7 @@ export default function LandingPage() {
             </p>
             <div
               className="animate-fade-up flex flex-col gap-3 motion-reduce:animate-none sm:flex-row"
-              style={{ animationDelay: "200ms" }}
+              style={{ animationDelay: "260ms" }}
             >
               <Button size="lg" className="px-6" asChild>
                 <Link href="/register">Start selling free</Link>
@@ -199,16 +208,25 @@ export default function LandingPage() {
             </div>
             <p
               className="animate-fade-up text-sm text-muted-foreground motion-reduce:animate-none"
-              style={{ animationDelay: "300ms" }}
+              style={{ animationDelay: "360ms" }}
             >
               Your storefront&apos;s ready in under 2 minutes at{" "}
               <span className="font-medium text-foreground">dmhq.in/you</span> — just customize and go.
             </p>
           </div>
+
+          <a
+            href="#sound-familiar"
+            aria-label="Scroll to learn more"
+            className="animate-fade-up absolute right-6 bottom-6 flex size-12 items-center justify-center rounded-full border border-border bg-background/80 text-foreground backdrop-blur transition-colors hover:bg-accent motion-reduce:animate-none sm:right-10 sm:bottom-10"
+            style={{ animationDelay: "500ms" }}
+          >
+            <ArrowDown className="size-4" />
+          </a>
         </section>
 
         {/* Before / After */}
-        <section className="border-t border-border">
+        <section id="sound-familiar" className="border-t border-border">
           <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
             <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Sound familiar?</h2>
@@ -440,7 +458,11 @@ export default function LandingPage() {
         </section>
 
         {/* Pricing */}
-        <section id="pricing" className="border-t border-border">
+        <section id="pricing" className="relative isolate overflow-hidden border-t border-border">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-full bg-[radial-gradient(ellipse_45%_60%_at_50%_20%,color-mix(in_oklch,var(--primary),transparent_92%),transparent)]"
+          />
           <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
             <Reveal>
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -451,20 +473,33 @@ export default function LandingPage() {
                 <p>Already have an audience? Stop losing orders in the chaos of a busy inbox.</p>
               </div>
             </Reveal>
-            <Reveal delayMs={100} className="mx-auto mt-10 max-w-sm">
-              <div className="rounded-xl border border-border bg-card p-8">
-                <div className="font-heading text-4xl font-semibold tracking-tight">
-                  ₹999<span className="text-lg font-normal text-muted-foreground">/month</span>
+            <Reveal delayMs={100} className="mx-auto mt-10 max-w-md">
+              <div className="rounded-2xl border border-border bg-card p-8 text-left shadow-sm sm:p-10">
+                <div className="text-center">
+                  <div className="font-heading text-5xl font-semibold tracking-tight">
+                    ₹999<span className="text-lg font-normal text-muted-foreground">/month</span>
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    No transaction fees. No hidden cuts on your sales.
+                  </p>
                 </div>
-                <p className="mt-3 text-sm text-muted-foreground">
-                  Everything included — storefront, checkout, payments, notifications. No transaction fees. No
-                  hidden cuts on your sales.
-                </p>
+
                 <Button size="lg" className="mt-6 w-full" asChild>
                   <Link href="/register">Start selling free</Link>
                 </Button>
-                <p className="mt-4 text-xs text-muted-foreground">
-                  No commission as you grow. Sell ₹10,000 or ₹10,00,000 a month — the price doesn&apos;t change.
+
+                <ul className="mt-8 space-y-3 border-t border-border pt-6">
+                  {PLANS[0].features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2.5 text-sm">
+                      <Check className="mt-0.5 size-4 shrink-0 text-primary" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <p className="mt-6 text-center text-xs text-muted-foreground">
+                  No commission as you grow. Sell ₹10,000 or ₹10,00,000 a month — the price doesn&apos;t
+                  change.
                 </p>
               </div>
             </Reveal>

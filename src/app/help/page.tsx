@@ -49,7 +49,7 @@ const customerFaqs = [
 
 export default function HelpPage() {
   return (
-    <div className="flex min-h-svh flex-col">
+    <div className="marketing-light flex min-h-svh flex-col bg-background text-foreground">
       <MarketingHeader />
 
       <main className="flex-1">

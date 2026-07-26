@@ -162,6 +162,47 @@
   --sidebar-ring: #00a66c;
 }
 
+/* Public marketing pages (landing, about, help, contact, ...) are
+   white-and-green by brand decision, regardless of the visitor's system
+   theme or the dashboard's own dark mode preference — the dashboard app
+   still supports dark mode for logged-in users, this only opts marketing
+   pages out. Re-declares :root's light values so they win over an
+   ancestor .dark class no matter how deep this sits in the tree, since
+   custom properties resolve to the nearest declaration. */
+.marketing-light {
+  color-scheme: light;
+  --background: #fafafa;
+  --foreground: #202223;
+  --card: #ffffff;
+  --card-foreground: #202223;
+  --popover: #ffffff;
+  --popover-foreground: #202223;
+  --primary: #008060;
+  --primary-hover: #006e52;
+  --primary-foreground: #ffffff;
+  --secondary: #f2f2f3;
+  --secondary-foreground: #202223;
+  --muted: #f2f2f3;
+  --muted-foreground: #6d7175;
+  --accent: #e3f5ec;
+  --accent-foreground: #008060;
+  --success: #008060;
+  --success-foreground: #ffffff;
+  --warning: #f49342;
+  --warning-foreground: #202223;
+  --info: #2c6ecb;
+  --info-foreground: #ffffff;
+  --destructive: #d72c0d;
+  --border: #e7e7e9;
+  --input: #e7e7e9;
+  --ring: #008060;
+  --chart-1: #008060;
+  --chart-2: #2c6ecb;
+  --chart-3: #f49342;
+  --chart-4: #d72c0d;
+  --chart-5: #6d7175;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

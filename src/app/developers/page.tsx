@@ -221,7 +221,7 @@ const groups: Group[] = [
 
 export default function DevelopersPage() {
   return (
-    <div className="flex min-h-svh flex-col">
+    <div className="marketing-light flex min-h-svh flex-col bg-background text-foreground">
       <MarketingHeader />
 
       <main className="flex-1">
