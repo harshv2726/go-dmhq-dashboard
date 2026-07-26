@@ -177,15 +177,16 @@ export default function LandingPage() {
             style={{ animationDuration: "10s" }}
           />
 
-          <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-4 py-20 text-center sm:px-6 lg:px-8">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-4 py-20 text-center sm:px-6 lg:px-8">
             <span className="animate-fade-up text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase motion-reduce:animate-none">
               Seller operations platform
             </span>
             <h1
-              className="animate-fade-up text-balance font-heading text-4xl font-semibold tracking-tight motion-reduce:animate-none sm:text-5xl lg:text-6xl"
+              className="animate-fade-up text-balance font-heading text-4xl font-semibold tracking-tight motion-reduce:animate-none sm:text-5xl xl:text-6xl"
               style={{ animationDelay: "60ms" }}
             >
-              Your Instagram and WhatsApp are your storefront. We handle the rest.
+              Your Instagram and WhatsApp are<br className="hidden sm:block" /> your storefront. We handle the
+              rest.
             </h1>
             <p
               className="animate-fade-up max-w-2xl text-balance text-lg text-muted-foreground motion-reduce:animate-none"
