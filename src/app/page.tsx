@@ -182,18 +182,17 @@ export default function LandingPage() {
               Seller operations platform
             </span>
             <h1
-              className="animate-fade-up text-balance font-heading text-5xl font-semibold tracking-tight motion-reduce:animate-none sm:text-6xl lg:text-7xl"
+              className="animate-fade-up text-balance font-heading text-4xl font-semibold tracking-tight motion-reduce:animate-none sm:text-5xl lg:text-6xl"
               style={{ animationDelay: "60ms" }}
             >
-              You didn&apos;t lose the customer. You lost the message.
+              Your Instagram and WhatsApp are your storefront. We handle the rest.
             </h1>
             <p
               className="animate-fade-up max-w-2xl text-balance text-lg text-muted-foreground motion-reduce:animate-none"
               style={{ animationDelay: "160ms" }}
             >
-              Every &ldquo;is this available?&rdquo;, every payment screenshot, every &ldquo;I&apos;ll pay
-              now&rdquo; — DMHQ keeps it all in order: who paid, who&apos;s next, what ships today. No
-              spreadsheet, no scrolling through old chats.
+              DMHQ is the operations layer for Instagram sellers — orders, payments, inventory, and WhatsApp
+              notifications — so you can stay focused on content and customers, not code.
             </p>
             <div
               className="animate-fade-up flex flex-col gap-3 motion-reduce:animate-none sm:flex-row"
