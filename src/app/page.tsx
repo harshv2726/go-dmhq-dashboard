@@ -25,6 +25,8 @@ import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/reveal";
 import { MarketingHeader } from "@/components/marketing/site-header";
 import { MarketingFooter } from "@/components/marketing/site-footer";
+import { SmoothScroll } from "@/components/marketing/smooth-scroll";
+import { Parallax } from "@/components/marketing/parallax";
 import { PLANS } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -138,6 +140,7 @@ const storeTypes = [
 export default function LandingPage() {
   return (
     <div className="marketing-light flex min-h-svh flex-col bg-background text-foreground">
+      <SmoothScroll />
       <MarketingHeader />
 
       <main className="flex-1">
@@ -147,19 +150,23 @@ export default function LandingPage() {
             aria-hidden
             className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_65%_55%_at_50%_38%,color-mix(in_oklch,var(--primary),transparent_85%),transparent)]"
           />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 -z-10 opacity-50 [mask-image:radial-gradient(ellipse_60%_55%_at_50%_38%,black,transparent)]"
-            style={{
-              backgroundImage: `radial-gradient(color-mix(in oklch, var(--foreground), transparent 88%) 1px, transparent 1px)`,
-              backgroundSize: "24px 24px",
-            }}
-          />
-          <div
-            aria-hidden
-            className="animate-float pointer-events-none absolute top-1/3 left-1/2 -z-10 size-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl motion-reduce:hidden"
-            style={{ animationDuration: "10s" }}
-          />
+          <Parallax speed={0.08} className="pointer-events-none absolute inset-0 -z-10">
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-50 [mask-image:radial-gradient(ellipse_60%_55%_at_50%_38%,black,transparent)]"
+              style={{
+                backgroundImage: `radial-gradient(color-mix(in oklch, var(--foreground), transparent 88%) 1px, transparent 1px)`,
+                backgroundSize: "24px 24px",
+              }}
+            />
+          </Parallax>
+          <Parallax speed={0.2} className="pointer-events-none absolute top-1/3 left-1/2 -z-10 -translate-x-1/2">
+            <div
+              aria-hidden
+              className="animate-float size-[30rem] rounded-full bg-primary/10 blur-3xl motion-reduce:hidden"
+              style={{ animationDuration: "10s" }}
+            />
+          </Parallax>
 
           <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-4 py-20 text-center sm:px-6 lg:px-8">
             <span className="animate-fade-up text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase motion-reduce:animate-none">
@@ -386,10 +393,12 @@ export default function LandingPage() {
 
         {/* Pricing */}
         <section id="pricing" className="relative isolate overflow-hidden border-t border-border">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-full bg-[radial-gradient(ellipse_45%_60%_at_50%_20%,color-mix(in_oklch,var(--primary),transparent_92%),transparent)]"
-          />
+          <Parallax speed={0.1} className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-full">
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-[radial-gradient(ellipse_45%_60%_at_50%_20%,color-mix(in_oklch,var(--primary),transparent_92%),transparent)]"
+            />
+          </Parallax>
           <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
             <Reveal>
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -435,14 +444,16 @@ export default function LandingPage() {
 
         {/* Final CTA */}
         <section className="relative isolate overflow-hidden border-t border-border bg-primary text-primary-foreground">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 -z-10 opacity-[0.14]"
-            style={{
-              backgroundImage: `radial-gradient(var(--primary-foreground) 1.5px, transparent 1.5px)`,
-              backgroundSize: "24px 24px",
-            }}
-          />
+          <Parallax speed={0.08} className="pointer-events-none absolute inset-0 -z-10">
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-[0.14]"
+              style={{
+                backgroundImage: `radial-gradient(var(--primary-foreground) 1.5px, transparent 1.5px)`,
+                backgroundSize: "24px 24px",
+              }}
+            />
+          </Parallax>
           <Reveal className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-center sm:px-6 lg:px-8">
             <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
               Your shop already has customers.

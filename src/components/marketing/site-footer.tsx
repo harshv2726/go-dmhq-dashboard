@@ -24,13 +24,35 @@ const legalLinks = [
   { href: "/sitemap.xml", label: "Sitemap" },
 ];
 
+// Vertical "roll" on hover — the label slides up and out while an identical
+// copy slides up into its place from below, so the text never actually
+// changes, just appears to continuously roll. Needs an ancestor with the
+// `group` class (every caller here is a <Link className="group ...">).
+// motion-safe: means reduced-motion users just get static text, no broken
+// half-clipped state.
+function RollingText({ text }: { text: string }) {
+  return (
+    <span className="relative inline-block overflow-hidden align-bottom leading-tight">
+      <span className="block transition-transform duration-300 ease-out motion-safe:group-hover:-translate-y-full">
+        {text}
+      </span>
+      <span
+        aria-hidden
+        className="absolute inset-0 block translate-y-full transition-transform duration-300 ease-out motion-safe:group-hover:translate-y-0"
+      >
+        {text}
+      </span>
+    </span>
+  );
+}
+
 function LinkList({ links }: { links: { href: string; label: string }[] }) {
   return (
     <ul className="mt-3 space-y-2.5 text-sm text-muted-foreground">
       {links.map((link) => (
         <li key={link.href}>
           <Link href={link.href} className="group inline-flex items-center gap-1 hover:text-foreground">
-            {link.label}
+            <RollingText text={link.label} />
             <ArrowRight className="size-3.5 -translate-x-1 opacity-0 transition motion-safe:group-hover:translate-x-0 motion-safe:group-hover:opacity-100" />
           </Link>
         </li>
@@ -84,8 +106,8 @@ export function MarketingFooter() {
           <span>© {new Date().getFullYear()} DMHQ. All rights reserved.</span>
           <div className="flex items-center gap-4">
             {legalLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="hover:text-foreground">
-                {link.label}
+              <Link key={link.href} href={link.href} className="group hover:text-foreground">
+                <RollingText text={link.label} />
               </Link>
             ))}
           </div>
