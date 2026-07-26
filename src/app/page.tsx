@@ -20,11 +20,9 @@ import {
   TrendingUp,
   Users,
   Wand2,
-  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/reveal";
-import { HowItWorksIllustration } from "@/components/how-it-works-illustration";
 import { MarketingHeader } from "@/components/marketing/site-header";
 import { MarketingFooter } from "@/components/marketing/site-footer";
 import { PLANS } from "@/lib/types";
@@ -88,20 +86,6 @@ const features = [
     title: "Seller dashboard",
     description: "Orders, products, and revenue — all in one place, built for your phone.",
   },
-];
-
-const beforeList = [
-  "“Is this available?” — five times, unanswered",
-  "A payment screenshot with no name attached",
-  "“Order confirm hua?” sent two hours ago, still unread",
-  "Half a notebook page, and you can't read your own handwriting anymore",
-];
-
-const afterList = [
-  "Every order in one list — name, product, paid or not",
-  "WhatsApp sends “Order confirmed” automatically",
-  "One dashboard, not six open chats",
-  "Nothing forgotten, nothing re-explained",
 ];
 
 const whoItsFor = [
@@ -216,7 +200,7 @@ export default function LandingPage() {
           </div>
 
           <a
-            href="#sound-familiar"
+            href="#how-it-works"
             aria-label="Scroll to learn more"
             className="animate-fade-up absolute right-6 bottom-6 flex size-12 items-center justify-center rounded-full border border-border bg-background/80 text-foreground backdrop-blur transition-colors hover:bg-accent motion-reduce:animate-none sm:right-10 sm:bottom-10"
             style={{ animationDelay: "500ms" }}
@@ -225,69 +209,12 @@ export default function LandingPage() {
           </a>
         </section>
 
-        {/* Before / After */}
-        <section id="sound-familiar" className="border-t border-border">
-          <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-            <Reveal className="mx-auto max-w-2xl text-center">
-              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">Sound familiar?</h2>
-            </Reveal>
-            <div className="relative mt-10 grid gap-6 sm:grid-cols-2">
-              <div
-                aria-hidden
-                className="absolute top-1/2 left-1/2 z-10 hidden size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background font-heading text-xs font-semibold text-muted-foreground shadow-sm sm:flex"
-              >
-                VS
-              </div>
-              <Reveal>
-                <div className="h-full rounded-xl border border-destructive/20 bg-destructive/[0.03] p-6">
-                  <h3 className="font-heading text-sm font-semibold text-muted-foreground">
-                    Your DMs right now
-                  </h3>
-                  <ul className="mt-4 space-y-3">
-                    {beforeList.map((item) => (
-                      <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                        <X className="mt-0.5 size-4 shrink-0 text-destructive" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-              <Reveal delayMs={100}>
-                <div className="h-full rounded-xl border border-primary/25 bg-primary/[0.04] p-6">
-                  <h3 className="font-heading text-sm font-semibold text-primary">Your DMs with DMHQ</h3>
-                  <ul className="mt-4 space-y-3">
-                    {afterList.map((item) => (
-                      <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                        <Check className="mt-0.5 size-4 shrink-0 text-primary" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-            </div>
-            <Reveal delayMs={150} className="mt-8 text-center text-sm text-muted-foreground">
-              Same DMs. Same customers. Just nothing falls through anymore.
-            </Reveal>
-          </div>
-        </section>
-
         {/* How it works */}
         <section id="how-it-works" className="border-t border-border bg-muted/40">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
             <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">How it works</h2>
               <p className="mt-2 text-muted-foreground">Post it. Link it. Ship it.</p>
-            </Reveal>
-
-            {/* Illustration: a checkout link opened on a phone, with the three
-                steps fanned around it as floating cards that swap the phone's
-                screen on hover (auto-cycling otherwise). Decorative — the
-                numbered list below carries the actual content for anyone on
-                a small screen or a screen reader. */}
-            <Reveal delayMs={150}>
-              <HowItWorksIllustration />
             </Reveal>
 
             <div className="mt-12 grid gap-8 sm:grid-cols-3 lg:mt-16">
@@ -518,7 +445,8 @@ export default function LandingPage() {
           />
           <Reveal className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-center sm:px-6 lg:px-8">
             <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-              Your shop already has customers. It just needed someone keeping track.
+              Your shop already has customers.
+              <br className="hidden sm:block" /> It just needed someone keeping track.
             </h2>
             <p className="max-w-xl text-primary-foreground/80">
               DMHQ keeps track of who ordered, who paid, and what ships next — so nothing gets lost in the
