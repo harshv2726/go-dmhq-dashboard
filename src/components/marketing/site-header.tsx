@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 // Not to be confused with the authenticated dashboard's site-header.tsx.
 export function MarketingHeader() {
   return (
-    <header className="border-b border-border">
+    <header>
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
           <div className="flex aspect-square size-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
