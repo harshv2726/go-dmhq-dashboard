@@ -73,6 +73,7 @@ export function AccessRequestsSettingsForm() {
                     <Badge variant="secondary" className={cn("capitalize", statusStyles[req.status])}>
                       {req.status}
                     </Badge>
+                    <span className="text-sm font-medium">{req.requested_by_name || "DMHQ support"}</span>
                     <span className="text-xs text-muted-foreground">{formatDate(req.created_at)}</span>
                   </div>
                   <p className="mt-1 text-sm">{req.reason}</p>

@@ -4,17 +4,31 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { Loader2, Upload, X } from "lucide-react";
 import { api, ApiError } from "@/lib/api";
+import { cn } from "@/lib/utils";
 import type { UploadResult } from "@/lib/types";
 
 interface ImageUploaderProps {
   urls: string[];
   onChange: (urls: string[]) => void;
   max?: number;
+  /** "wide" fits a banner-shaped tile (e.g. store banner); "square" (default)
+   * suits product/collection images. */
+  aspect?: "square" | "wide";
+  /** "contain" avoids cropping — use for logos, which are often non-square
+   * or have transparent padding. Defaults to "cover" (fills the tile),
+   * which suits photographic product/collection/banner images. */
+  fit?: "cover" | "contain";
 }
 
 /** Grid of uploaded image thumbnails plus an "add" tile. Set max=1 for a
  * single-image field (collection/store logo/banner). */
-export function ImageUploader({ urls, onChange, max = 6 }: ImageUploaderProps) {
+export function ImageUploader({
+  urls,
+  onChange,
+  max = 6,
+  aspect = "square",
+  fit = "cover",
+}: ImageUploaderProps) {
   const [isUploading, setIsUploading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -45,15 +59,17 @@ export function ImageUploader({ urls, onChange, max = 6 }: ImageUploaderProps) {
     onChange(urls.filter((_, i) => i !== index));
   }
 
+  const tileSize = aspect === "wide" ? "h-20 w-full max-w-72" : "h-20 w-20";
+
   return (
     <div className="space-y-2">
       <div className="flex flex-wrap gap-3">
         {urls.map((url, i) => (
-          <div key={url} className="group relative h-20 w-20 overflow-hidden rounded-md border">
+          <div key={url} className={cn("group relative overflow-hidden rounded-md border bg-muted/30", tileSize)}>
             {/* eslint-disable-next-line @next/next/no-img-element -- uploaded
             images come from a dynamic backend host, not a build-time-known
             domain, so next/image's remotePatterns config doesn't fit. */}
-            <img src={url} alt="" className="h-full w-full object-cover" />
+            <img src={url} alt="" className={cn("h-full w-full", fit === "cover" ? "object-cover" : "object-contain")} />
             <button
               type="button"
               onClick={() => removeAt(i)}
@@ -69,7 +85,10 @@ export function ImageUploader({ urls, onChange, max = 6 }: ImageUploaderProps) {
             type="button"
             onClick={() => inputRef.current?.click()}
             disabled={isUploading}
-            className="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-md border border-dashed text-muted-foreground hover:border-foreground/50 hover:text-foreground disabled:opacity-50"
+            className={cn(
+              "flex flex-col items-center justify-center gap-1 rounded-md border border-dashed text-muted-foreground hover:border-foreground/50 hover:text-foreground disabled:opacity-50",
+              tileSize,
+            )}
           >
             {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
             <span className="text-[10px]">Add</span>
@@ -79,7 +98,7 @@ export function ImageUploader({ urls, onChange, max = 6 }: ImageUploaderProps) {
       <input
         ref={inputRef}
         type="file"
-        accept="image/jpeg,image/png,image/webp,image/gif"
+        accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
         multiple={max > 1}
         className="hidden"
         onChange={(e) => handleFiles(e.target.files)}

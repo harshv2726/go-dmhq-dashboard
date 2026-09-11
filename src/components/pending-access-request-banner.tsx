@@ -43,7 +43,7 @@ export function PendingAccessRequestBanner() {
       <div className="flex items-start gap-2">
         <ShieldQuestion className="mt-0.5 size-4 shrink-0" />
         <span>
-          DMHQ Support is requesting access to your store: &ldquo;{next.reason}&rdquo;
+          {next.requested_by_name || "DMHQ Support"} is requesting access to your store: &ldquo;{next.reason}&rdquo;
           {rest.length > 0 && ` (+${rest.length} more pending)`}
         </span>
       </div>

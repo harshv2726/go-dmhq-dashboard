@@ -54,13 +54,9 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <form onSubmit={handleSubmit}>
         <FieldGroup>
-          <div className="flex flex-col items-center gap-2 text-center">
-            <span className="font-heading text-xl font-semibold tracking-tight">DMHQ.</span>
-            <FieldDescription>
-              Tap, buy, done.
-              <br />
-              Sell on Instagram. Manage from DMHQ.
-            </FieldDescription>
+          <div className="flex flex-col gap-1">
+            <h1 className="font-heading text-2xl font-bold tracking-tight">Create your DMHQ</h1>
+            <p className="text-base text-muted-foreground">Set up shop in minutes — no website needed.</p>
           </div>
           <Field>
             <FieldLabel htmlFor="name">Your name</FieldLabel>
@@ -113,10 +109,11 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
                 }}
               />
             </div>
+            <FieldDescription>This is your checkout link — share it on Instagram or WhatsApp.</FieldDescription>
           </Field>
           <Field>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Creating store…" : "Create store"}
+              {isSubmitting ? "Creating your storefront…" : "Create my storefront"}
             </Button>
           </Field>
           <FieldSeparator>Or</FieldSeparator>

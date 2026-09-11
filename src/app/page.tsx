@@ -27,6 +27,7 @@ import { MarketingHeader } from "@/components/marketing/site-header";
 import { MarketingFooter } from "@/components/marketing/site-footer";
 import { SmoothScroll } from "@/components/marketing/smooth-scroll";
 import { Parallax } from "@/components/marketing/parallax";
+import { AIAskDemo } from "@/components/marketing/ai-ask-demo";
 import { PLANS } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -167,9 +168,24 @@ export default function LandingPage() {
               style={{ animationDuration: "10s" }}
             />
           </Parallax>
+          {/* Second, cooler-hued orb offset from the first — the two-tone
+              primary/info combination reads as "intelligent product"
+              elsewhere on this page (see .glow-border), so it's echoed
+              faintly here too rather than the hero being pure brand-green. */}
+          <Parallax speed={0.14} className="pointer-events-none absolute top-1/4 left-2/3 -z-10 -translate-x-1/2">
+            <div
+              aria-hidden
+              className="animate-float size-80 rounded-full bg-info/10 blur-3xl motion-reduce:hidden"
+              style={{ animationDuration: "13s", animationDelay: "1.5s" }}
+            />
+          </Parallax>
 
           <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-4 py-20 text-center sm:px-6 lg:px-8">
-            <span className="animate-fade-up text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase motion-reduce:animate-none">
+            <span className="animate-fade-up flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase motion-reduce:animate-none">
+              <span className="relative flex size-1.5">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-75 motion-reduce:hidden" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-primary" />
+              </span>
               Seller operations platform
             </span>
             <h1
@@ -359,34 +375,51 @@ export default function LandingPage() {
         </section>
 
         {/* AI, coming soon */}
-        <section className="border-t border-border">
+        <section className="relative isolate overflow-hidden border-t border-border">
+          <Parallax speed={0.1} className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-full">
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_55%_60%_at_65%_35%,black,transparent)]"
+              style={{
+                background:
+                  "radial-gradient(ellipse 55% 60% at 65% 35%, color-mix(in oklch, var(--info), transparent 90%), transparent), radial-gradient(ellipse 45% 50% at 20% 70%, color-mix(in oklch, var(--primary), transparent 92%), transparent)",
+              }}
+            />
+          </Parallax>
+
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-            <Reveal className="mx-auto max-w-2xl text-center">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
-                <Sparkles className="size-3.5" />
-                Coming soon
-              </span>
-              <h2 className="mt-4 font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-                Ask DMHQ. It answers.
-              </h2>
-              <p className="mt-2 text-muted-foreground">
-                No dashboards to dig through. Ask &ldquo;how did I do this week?&rdquo; and get a report. Type a
-                product description and DMHQ adds it for you. Ask &ldquo;what&apos;s low on stock?&rdquo; and get
-                an answer — instantly, in plain language.
-              </p>
-            </Reveal>
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {aiCapabilities.map((item, i) => (
-                <Reveal key={item.title} delayMs={i * 100}>
-                  <div className="h-full rounded-xl border border-dashed border-border bg-card/50 p-6">
-                    <div className="flex size-9 items-center justify-center rounded-lg bg-accent text-accent-foreground">
-                      <item.icon className="size-5" />
-                    </div>
-                    <h3 className="mt-4 font-heading text-base font-semibold">{item.title}</h3>
-                    <p className="mt-1.5 text-sm text-muted-foreground">{item.description}</p>
-                  </div>
-                </Reveal>
-              ))}
+            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+              <Reveal>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
+                  <Sparkles className="size-3.5" />
+                  Coming soon
+                </span>
+                <h2 className="mt-4 text-balance font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
+                  Ask DMHQ. It answers.
+                </h2>
+                <p className="mt-2 text-muted-foreground">
+                  No dashboards to dig through. Ask &ldquo;how did I do this week?&rdquo; and get a report. Type a
+                  product description and DMHQ adds it for you. Ask &ldquo;what&apos;s low on stock?&rdquo; and get
+                  an answer — instantly, in plain language.
+                </p>
+                <dl className="mt-8 grid gap-5 sm:grid-cols-2">
+                  {aiCapabilities.map((item, i) => (
+                    <Reveal key={item.title} delayMs={i * 80} className="flex gap-3">
+                      <dt className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+                        <item.icon className="size-4" />
+                      </dt>
+                      <dd>
+                        <p className="font-heading text-sm font-semibold">{item.title}</p>
+                        <p className="mt-0.5 text-sm text-muted-foreground">{item.description}</p>
+                      </dd>
+                    </Reveal>
+                  ))}
+                </dl>
+              </Reveal>
+
+              <Reveal delayMs={150} className="mx-auto w-full max-w-md lg:mx-0 lg:ml-auto">
+                <AIAskDemo />
+              </Reveal>
             </div>
           </div>
         </section>

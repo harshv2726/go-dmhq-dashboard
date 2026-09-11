@@ -9,8 +9,24 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { ImageUploader } from "@/components/media/image-uploader";
 import { cn } from "@/lib/utils";
+
+// Same approach as apps/storefront's store-theme.tsx (which actually
+// applies this palette to the live storefront) — duplicated rather than
+// shared since the two Next apps don't share a package for this. Used only
+// to pick a readable label color for the CTA preview swatch below.
+function relativeLuminance(hex: string): number {
+  const c = hex.replace("#", "");
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(c.slice(i, i + 2), 16) / 255);
+  const lin = (v: number) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+}
+
+function foregroundFor(hex: string): string {
+  return relativeLuminance(hex) > 0.5 ? "#1A1A1A" : "#FFFFFF";
+}
 
 interface ThemePreset {
   key: string;
@@ -116,6 +132,38 @@ function toFormState(s: Store): FormState {
     timezone: s.timezone,
     currency: s.currency,
   };
+}
+
+function ColorField({
+  id,
+  label,
+  value,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor={id}>{label}</Label>
+      <div className="flex items-center gap-2 rounded-md border pr-2 focus-within:ring-2 focus-within:ring-ring/30">
+        <Input
+          id={id}
+          type="color"
+          className="h-9 w-11 shrink-0 rounded-r-none border-0 border-r p-1"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+        <Input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="border-0 shadow-none focus-visible:ring-0"
+        />
+      </div>
+    </div>
+  );
 }
 
 interface GeneralBrandFormProps {
@@ -243,28 +291,41 @@ export function GeneralBrandForm({ initial, onSaved }: GeneralBrandFormProps) {
           <CardTitle>Brand</CardTitle>
           <CardDescription>Logo, banner, colors, and contact links.</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label>Logo</Label>
-              <ImageUploader
-                urls={values.logo_url ? [values.logo_url] : []}
-                onChange={(urls) => set("logo_url", urls[0] ?? null)}
-                max={1}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Banner</Label>
-              <ImageUploader
-                urls={values.banner_url ? [values.banner_url] : []}
-                onChange={(urls) => set("banner_url", urls[0] ?? null)}
-                max={1}
-              />
+        <CardContent className="space-y-6">
+          <div>
+            <h3 className="text-sm font-semibold">Logo &amp; banner</h3>
+            <p className="text-sm text-muted-foreground">Shown in your storefront header and social shares.</p>
+            <div className="mt-3 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label>Logo</Label>
+                <ImageUploader
+                  urls={values.logo_url ? [values.logo_url] : []}
+                  onChange={(urls) => set("logo_url", urls[0] ?? null)}
+                  max={1}
+                  fit="contain"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Banner</Label>
+                <ImageUploader
+                  urls={values.banner_url ? [values.banner_url] : []}
+                  onChange={(urls) => set("banner_url", urls[0] ?? null)}
+                  max={1}
+                  aspect="wide"
+                />
+              </div>
             </div>
           </div>
-          <div className="space-y-3">
-            <Label>Color palette</Label>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+
+          <Separator />
+
+          <div>
+            <h3 className="text-sm font-semibold">Color palette</h3>
+            <p className="text-sm text-muted-foreground">
+              Pick a starting point, then fine-tune — the preview updates as you go.
+            </p>
+
+            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {THEME_PRESETS.map((preset) => (
                 <button
                   key={preset.key}
@@ -285,94 +346,94 @@ export function GeneralBrandForm({ initial, onSaved }: GeneralBrandFormProps) {
                 </button>
               ))}
             </div>
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="space-y-2">
-              <Label htmlFor="theme_background">Background</Label>
-              <div className="flex items-center gap-2">
-                <Input
+
+            <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_auto]">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <ColorField
                   id="theme_background"
-                  type="color"
-                  className="h-9 w-14 p-1"
+                  label="Background"
                   value={values.theme_background}
-                  onChange={(e) => setColor("theme_background", e.target.value)}
+                  onChange={(v) => setColor("theme_background", v)}
                 />
-                <Input value={values.theme_background} onChange={(e) => setColor("theme_background", e.target.value)} />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="theme_text">Text</Label>
-              <div className="flex items-center gap-2">
-                <Input
+                <ColorField
                   id="theme_text"
-                  type="color"
-                  className="h-9 w-14 p-1"
+                  label="Text"
                   value={values.theme_text}
-                  onChange={(e) => setColor("theme_text", e.target.value)}
+                  onChange={(v) => setColor("theme_text", v)}
                 />
-                <Input value={values.theme_text} onChange={(e) => setColor("theme_text", e.target.value)} />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="theme_color">Accent</Label>
-              <div className="flex items-center gap-2">
-                <Input
+                <ColorField
                   id="theme_color"
-                  type="color"
-                  className="h-9 w-14 p-1"
+                  label="Accent"
                   value={values.theme_color}
-                  onChange={(e) => setColor("theme_color", e.target.value)}
+                  onChange={(v) => setColor("theme_color", v)}
                 />
-                <Input value={values.theme_color} onChange={(e) => setColor("theme_color", e.target.value)} />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="theme_cta_color">CTA (buttons)</Label>
-              <div className="flex items-center gap-2">
-                <Input
+                <ColorField
                   id="theme_cta_color"
-                  type="color"
-                  className="h-9 w-14 p-1"
+                  label="CTA (buttons)"
                   value={values.theme_cta_color}
-                  onChange={(e) => setColor("theme_cta_color", e.target.value)}
+                  onChange={(v) => setColor("theme_cta_color", v)}
                 />
-                <Input value={values.theme_cta_color} onChange={(e) => setColor("theme_cta_color", e.target.value)} />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="theme_subtle">Subtle</Label>
-              <div className="flex items-center gap-2">
-                <Input
+                <ColorField
                   id="theme_subtle"
-                  type="color"
-                  className="h-9 w-14 p-1"
+                  label="Subtle"
                   value={values.theme_subtle}
-                  onChange={(e) => setColor("theme_subtle", e.target.value)}
+                  onChange={(v) => setColor("theme_subtle", v)}
                 />
-                <Input value={values.theme_subtle} onChange={(e) => setColor("theme_subtle", e.target.value)} />
+              </div>
+
+              {/* Live preview — mirrors how these tokens actually get applied on
+                  the storefront (see apps/storefront's store-theme.tsx), so a
+                  seller can judge contrast/legibility without leaving Settings. */}
+              <div className="w-full self-start overflow-hidden rounded-lg border shadow-sm lg:w-56">
+                <div
+                  className="space-y-3 p-4"
+                  style={{ backgroundColor: values.theme_background, color: values.theme_text }}
+                >
+                  <p className="text-xs font-semibold tracking-wide uppercase" style={{ color: values.theme_color }}>
+                    {values.name || "Your store"}
+                  </p>
+                  <p className="text-sm font-medium">{values.tagline || "A product your customers will love"}</p>
+                  <button
+                    type="button"
+                    tabIndex={-1}
+                    className="w-full rounded-md px-3 py-2 text-sm font-medium"
+                    style={{ backgroundColor: values.theme_cta_color, color: foregroundFor(values.theme_cta_color) }}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+                <div className="p-3 text-xs" style={{ backgroundColor: values.theme_subtle, color: values.theme_text }}>
+                  Subtle surface — cards, hover states
+                </div>
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="font_family">Font family</Label>
-              <Input id="font_family" value={values.font_family} onChange={(e) => set("font_family", e.target.value)} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="instagram_url">Instagram URL</Label>
-              <Input
-                id="instagram_url"
-                value={values.instagram_url}
-                onChange={(e) => set("instagram_url", e.target.value)}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="whatsapp_number">WhatsApp number</Label>
-              <Input
-                id="whatsapp_number"
-                value={values.whatsapp_number}
-                onChange={(e) => set("whatsapp_number", e.target.value)}
-              />
+
+          <Separator />
+
+          <div>
+            <h3 className="text-sm font-semibold">Typography &amp; links</h3>
+            <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="space-y-2">
+                <Label htmlFor="font_family">Font family</Label>
+                <Input id="font_family" value={values.font_family} onChange={(e) => set("font_family", e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="instagram_url">Instagram URL</Label>
+                <Input
+                  id="instagram_url"
+                  value={values.instagram_url}
+                  onChange={(e) => set("instagram_url", e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="whatsapp_number">WhatsApp number</Label>
+                <Input
+                  id="whatsapp_number"
+                  value={values.whatsapp_number}
+                  onChange={(e) => set("whatsapp_number", e.target.value)}
+                />
+              </div>
             </div>
           </div>
         </CardContent>

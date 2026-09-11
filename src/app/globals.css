@@ -203,6 +203,44 @@
   --chart-5: #6d7175;
 }
 
+/* Animated conic-gradient ring — marks a surface as "AI-powered" (used on
+   the Ask DMHQ demo card on the landing page). A two-tone primary/info
+   sweep rotated via the --glow-angle custom property, which needs
+   @property to be animatable at all; browsers without @property support
+   just see a static gradient ring instead, which is a fine fallback. */
+@property --glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.glow-border {
+  position: relative;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--glow-angle, 0deg),
+    transparent 0%,
+    var(--primary) 15%,
+    transparent 32%,
+    transparent 68%,
+    var(--info) 85%,
+    transparent 100%
+  );
+  animation: glow-spin 6s linear infinite;
+}
+
+@keyframes glow-spin {
+  to {
+    --glow-angle: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-border {
+    animation: none;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

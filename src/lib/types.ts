@@ -264,6 +264,8 @@ export interface AccessRequest {
   id: string;
   store_id: string;
   requested_by_id: string;
+  requested_by_name: string;
+  ticket_id: string | null;
   reason: string;
   status: AccessRequestStatus;
   approved_at: string | null;
@@ -293,4 +295,29 @@ export interface MenuItem {
   link_value: string;
   position: number;
   children: MenuChild[];
+}
+
+export type TicketStatus = "open" | "resolved";
+export type TicketSenderType = "seller" | "staff";
+
+export interface TicketMessage {
+  id: string;
+  ticket_id: string;
+  sender_type: TicketSenderType;
+  sender_name: string;
+  body: string;
+  created_at: string;
+}
+
+export interface Ticket {
+  id: string;
+  store_id: string;
+  subject: string;
+  status: TicketStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TicketDetail extends Ticket {
+  messages: TicketMessage[];
 }

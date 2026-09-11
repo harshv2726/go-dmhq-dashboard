@@ -7,6 +7,7 @@ import {
   FileText,
   FolderOpen,
   LayoutDashboard,
+  LifeBuoy,
   Menu,
   Package,
   Percent,
@@ -37,6 +38,7 @@ export const mainNavItems = [
     children: [{ href: "/navigation", label: "Navigation", icon: Menu }],
   },
   { href: "/customers", label: "Customers", icon: Users },
+  { href: "/support", label: "Support", icon: LifeBuoy },
 ] as const;
 
 // Rendered separately, pinned to the bottom of the desktop sidebar
